@@ -1,0 +1,108 @@
+body {
+    background-color: #F9F9F9;
+}
+
+.block-container {
+    display: inline-block;
+}
+
+.example-1 {
+    display: block;
+}
+
+.example-1 .scope {
+    padding: 15px;
+    margin: 0;
+}
+
+.example-1 .block {
+    float: left;
+}
+
+.example-2 .scope {
+    width: 600px;
+    height: 150px;
+    padding: 0px;
+    margin: 0;
+    overflow: scroll;
+}
+
+.example-2 .block {
+    position: relative;
+    float: left;
+}
+
+.example-2 .wide-container {
+    width: 1500px;
+    height: 150px;
+    position: relative;
+    padding: 0;
+    margin: 0;
+}
+
+.block {
+    width: 100px;
+    height: 100px;
+    box-sizing: border-box;
+    display: block;
+    padding: 5px;
+    margin: 5px;
+    position: relative;
+}
+
+.block svg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    overflow: visible;
+    z-index: 99;
+}
+
+.orange {
+    background-color: orange;
+}
+
+.yellow {
+    background-color: #FFCD40;
+}
+
+.green {
+    background-color: #7CB342;
+}
+
+.scope {
+    display: inline-block;
+    position: relative;
+    box-sizing: border-box;
+    background-color: #E0E0E0;
+    margin: 10px;
+    overflow: hidden;
+}
+
+.inactive {
+    background-color: lightgray;
+}
+
+.nv-scope {
+    background-color: #E0E0E0;
+}
+
+.nv-scope-current {
+    background-color: #DCEDC8;
+}
+
+.nv-scope-current .nv-el-current {
+    background-color: #03A9F4;
+}
+
+div#nav-event-info {
+    width: 200px;
+    border: 1px solid greenyellow;
+    position: fixed;
+    right: 0;
+    top: 0;
+    background-color: black;
+    color: white;
+    padding: 7px 10px;
+    z-index: 99;
+}

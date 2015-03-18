@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; Charset=UTF-8"/>
+    <title>Navigation</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css"/>
+</head>
+<body ng-controller="MainCtrl">
+    <div class="container">
+        <div class="row example-1">
+            <div class="col-md-6">
+                <h1>Scope 1</h1>
+                <div nv-scope="scope1" nv-scope-current class="scope">
+                    <div class="block-container">
+                        <div nv-el class="block yellow"></div>
+                        <div nv-el class="block yellow"></div>
+                        <div nv-el class="block yellow"></div>
+                    </div>
+                    <div class="block-container">
+                        <div class="block orange inactive">inactive</div>
+                        <div nv-el nv-el-current class="block yellow"></div>
+                        <div nv-el class="block yellow"></div>
+                    </div>
+                    <div class="block-container">
+                        <div nv-el class="block yellow"></div>
+                        <div id="scope1-scope2" nv-el class="block green btn btn-default">to scope 2</div>
+
+                        <div nv-el class="block yellow"></div>
+                        <div id="scope1-scope3" nv-el class="block green btn btn-default">to scope 3</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" >
+                <h1>Scope 2</h1>
+                <div nv-scope="scope2" class="example-1 scope">
+                    <div id="scope2-scope1" nv-el class="block green btn btn-default">to scope 1</div>
+                    <div class="block yellow" nv-el></div>
+                    <div class="block yellow" nv-el></div>
+                    <div class="block yellow" nv-el nv-el-current></div>
+                    <div class="block yellow" nv-el></div>
+                </div>
+            </div>
+        </div>
+        <div class="row example-2">
+            <div class="col-md-6">
+                <h1>Scope 3 scroll</h1>
+                <div id="scroll" nv-scope="scope3" class="scope">
+                    <div class="wide-container">
+                        <div nv-el nv-el-current class="block yellow"></div>
+                        <div nv-el class="block yellow"></div>
+                        <div id="scope3-scope1" nv-el class="block green btn btn-default">to scope1</div>
+                        <div nv-el class="block yellow"></div>
+                        <div class="block inactive yellow"></div>
+                        <div class="block inactive yellow"></div>
+                        <div nv-el class="block yellow"></div>
+                        <div nv-el class="block yellow"></div>
+                        <div nv-el class="block yellow"></div>
+                        <div nv-el class="block yellow"></div>
+                        <div nv-el class="block yellow"></div>
+                        <div nv-el class="block yellow"></div>
+                        <div nv-el class="block yellow"></div>
+                        <div nv-el class="block yellow"></div>
+                        <div nv-el class="block yellow"></div>
+                        <div nv-el class="block yellow"></div>
+                        <div nv-el class="block yellow"></div>
+                        <div nv-el class="block yellow"></div>
+                        <div nv-el class="block yellow"></div>
+                        <div nv-el class="block yellow"></div>
+                        <div nv-el class="block yellow"></div>
+                        <div nv-el class="block yellow"></div>
+                        <div nv-el class="block yellow"></div>
+                        <div nv-el class="block yellow"></div>
+                        <div nv-el class="block yellow"></div>
+                        <div nv-el class="block yellow"></div>
+                        <div nv-el class="block yellow"></div>
+                        <div nv-el class="block yellow"></div>
+                        <div nv-el class="block yellow"></div>
+                        <div nv-el class="block yellow"></div>
+                        <div nv-el class="block yellow"></div>
+                        <div nv-el class="block yellow"></div>
+                        <div nv-el class="block yellow"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var SVG = {
+            createCanvas : function( width, height, container ){
+                var canvas = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                canvas.setAttribute('width', width);
+                canvas.setAttribute('height', height);
+                container.appendChild( canvas );
+                return canvas;
+            },
+            createLine : function (x1, y1, x2, y2, color, w) {
+                var aLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                aLine.setAttribute('x1', x1);
+                aLine.setAttribute('y1', y1);
+                aLine.setAttribute('x2', x2);
+                aLine.setAttribute('y2', y2);
+                aLine.setAttribute('stroke', color);
+                aLine.setAttribute('stroke-width', w);
+                return aLine;
+            }
+        };
+
+        function drawFOV(element, FOV){
+            removeAllSVG();
+
+            var rayLenght = 150;
+            var a = rayLenght;
+            var B = Math.floor( FOV / 2);
+            var b = a * Math.tan(B * (Math.PI / 180));
+
+            var x = element.offsetWidth / 2;
+            var y = element.offsetHeight / 2;
+
+            var canvas = SVG.createCanvas(element.offsetHeight, element.offsetWidth, element);
+
+            // down
+            canvas.appendChild( SVG.createLine(x, y, x + b, y + rayLenght, 'green', 1) );
+            canvas.appendChild( SVG.createLine(x, y, x + (b * -1),  y + rayLenght, 'green', 1) );
+
+            // top
+            canvas.appendChild( SVG.createLine(x, y, x + b, y + (rayLenght * -1), 'red', 1) );
+            canvas.appendChild( SVG.createLine(x, y, x + (b * -1), y + (rayLenght * -1), 'red', 1) );
+
+            // left
+            canvas.appendChild( SVG.createLine(x, y, x + (rayLenght * -1), y + b, 'blue', 1) );
+            canvas.appendChild( SVG.createLine(x, y, x + (rayLenght * -1), y + (b * -1), 'blue', 1) );
+
+            // right
+            canvas.appendChild( SVG.createLine(x, y, x + rayLenght, y + b, 'yellow', 1) );
+            canvas.appendChild( SVG.createLine(x, y, x + rayLenght, y + (b * -1), 'yellow', 1) );
+        }
+
+        function removeAllSVG(){
+            var svgElements = document.body.querySelectorAll('svg');
+            for(var i = 0; i < svgElements.length; i++){
+                svgElements[i].remove();
+            }
+        }
+    </script>
+    <script type="text/javascript" src="../src/navigation.js"></script>
+    <script type="text/javascript">
+        var scope1scope2 = document.getElementById('scope1-scope2')
+        scope1scope2.addEventListener('nventer', function (event) {
+                    navigation.changeScope('scope2');
+                });
+        scope1scope2.addEventListener('click', function (event) {
+                    navigation.changeScope('scope2');
+                });
+
+        var scope1scope3 = document.getElementById('scope1-scope3')
+        scope1scope3.addEventListener('nv-enter', function (event) {
+            navigation.changeScope('scope3');
+        });
+        scope1scope3.addEventListener('click', function (event) {
+            navigation.changeScope('scope3');
+        });
+
+        var scope2scope1 = document.getElementById('scope2-scope1')
+        scope2scope1.addEventListener('nv-enter', function (event) {
+            navigation.changeScope('scope1');
+        });
+        scope2scope1.addEventListener('click', function (event) {
+            navigation.changeScope('scope1');
+        });
+
+
+        var scope3scope1 = document.getElementById('scope3-scope1')
+        scope3scope1.addEventListener('nv-enter', function (event) {
+            navigation.changeScope('scope1');
+        });
+
+        scope3scope1.addEventListener('click', function (event) {
+            navigation.changeScope('scope1');
+        });
+
+        document.body.addEventListener('nv-move', function (event) {
+            var element = navigation.getCurrentScope().getCurrentElement();
+            drawFOV(element, navigation.getOptions().FOV);
+        });
+
+    </script>
+</body>
+</html>
