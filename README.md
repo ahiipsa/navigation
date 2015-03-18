@@ -1,12 +1,12 @@
 ## Navigation
-
+For application that use the keyboard (Smart TV)
 
  
 ## Attributes
-nv-scope - declared scope for navigation
-nv-scope-current - marked and set this scope as active for first load
-nv-el - navigation element
-nv-el-current - marked and set this element as active for first load
+- `nv-scope` - declared scope for navigation
+- `nv-scope-current` - marked and set this scope as active for first load
+- `nv-el` - navigation element
+- `nv-el-current` - marked and set this element as active for first load
 
 ### Example
 ```html
@@ -20,10 +20,11 @@ nv-el-current - marked and set this element as active for first load
 ```
 
 ## Class
-nv-scope - add for scopes element
-nv-scope-current - add for current scope element
-nv-el - add for navigation elements
-nv-el-current - add for current navigation element
+
+- `nv-scope` - add for scopes element
+- `nv-scope-current` - add for current scope element
+- `nv-el` - add for navigation elements
+- `nv-el-current` - add for current navigation element
 
 ```html
 
@@ -46,8 +47,7 @@ nv-left, nv-right, nv-up, nv-down, nv-enter
 ```js
 
 document.body.addEventListener('nv-left', function (event) {
-    var element = navigation.getCurrentScope().getCurrentElement();
-    drawFOV(element, navigation.getOptions().FOV);
+    // logic
 });
 
 ```
