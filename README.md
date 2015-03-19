@@ -1,6 +1,12 @@
 ## Navigation
 For application that use the keyboard (Smart TV)
 
+
+## Install
+
+bower: 
+
+`bower install navigation`
  
 ## Attributes
 - `nv-scope` - declared scope for navigation
