@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Navigation : navigation for keyboard application">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Navigation</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/ahiipsa/navigation">View on GitHub</a>
+
+          <h1 id="project_title">Navigation</h1>
+          <h2 id="project_tagline">navigation for keyboard application</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/ahiipsa/navigation/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/ahiipsa/navigation/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h2>
+<a id="navigation" class="anchor" href="#navigation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Navigation</h2>
+
+<p>For application that use the keyboard (Smart TV)</p>
+
+<h2>
+<a id="attributes" class="anchor" href="#attributes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Attributes</h2>
+
+<ul>
+<li>
+<code>nv-scope</code> - declared scope for navigation</li>
+<li>
+<code>nv-scope-current</code> - marked and set this scope as active for first load</li>
+<li>
+<code>nv-el</code> - navigation element</li>
+<li>
+<code>nv-el-current</code> - marked and set this element as active for first load</li>
+</ul>
+
+<h3>
+<a id="example" class="anchor" href="#example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example</h3>
+
+<div class="highlight highlight-html"><pre>
+    &lt;<span class="pl-ent">div</span> <span class="pl-e">nv-scope</span>=<span class="pl-s1"><span class="pl-pds">"</span>menu<span class="pl-pds">"</span></span> <span class="pl-e">nv-scope-current</span>&gt;
+        &lt;<span class="pl-ent">div</span> <span class="pl-e">nv-el</span> <span class="pl-e">nv-el-current</span>&gt;Element 1&lt;/<span class="pl-ent">div</span>&gt;
+        &lt;<span class="pl-ent">div</span> <span class="pl-e">nv-el</span>&gt;Element 2&lt;/<span class="pl-ent">div</span>&gt;
+        &lt;<span class="pl-ent">div</span> <span class="pl-e">nv-el</span>&gt;Element 3&lt;/<span class="pl-ent">div</span>&gt;
+    &lt;/<span class="pl-ent">div</span>&gt;
+</pre></div>
+
+<h2>
+<a id="class" class="anchor" href="#class" aria-hidden="true"><span class="octicon octicon-link"></span></a>Class</h2>
+
+<ul>
+<li>
+<code>nv-scope</code> - add for scopes element</li>
+<li>
+<code>nv-scope-current</code> - add for current scope element</li>
+<li>
+<code>nv-el</code> - add for navigation elements</li>
+<li>
+<code>nv-el-current</code> - add for current navigation element</li>
+</ul>
+
+<div class="highlight highlight-html"><pre>
+    &lt;<span class="pl-ent">div</span> <span class="pl-e">nv-scope</span>=<span class="pl-s1"><span class="pl-pds">"</span>menu<span class="pl-pds">"</span></span> <span class="pl-e">class</span>=<span class="pl-s1"><span class="pl-pds">"</span>nv-scope nv-scope-current<span class="pl-pds">"</span></span> <span class="pl-e">nv-scope-current</span>&gt;
+        &lt;<span class="pl-ent">div</span> <span class="pl-e">nv-el</span> <span class="pl-e">nv-el-current</span> <span class="pl-e">class</span>=<span class="pl-s1"><span class="pl-pds">"</span>nv-el nv-el-current<span class="pl-pds">"</span></span>&gt;Element 1&lt;/<span class="pl-ent">div</span>&gt;
+        &lt;<span class="pl-ent">div</span> <span class="pl-e">nv-el</span> <span class="pl-e">class</span>=<span class="pl-s1"><span class="pl-pds">"</span>nv-el<span class="pl-pds">"</span></span>&gt;Element 2&lt;/<span class="pl-ent">div</span>&gt;
+        &lt;<span class="pl-ent">div</span> <span class="pl-e">nv-el</span> <span class="pl-e">class</span>=<span class="pl-s1"><span class="pl-pds">"</span>nv-el<span class="pl-pds">"</span></span>&gt;Element 3&lt;/<span class="pl-ent">div</span>&gt;
+    &lt;/<span class="pl-ent">div</span>&gt;
+</pre></div>
+
+<h2>
+<a id="event-listener" class="anchor" href="#event-listener" aria-hidden="true"><span class="octicon octicon-link"></span></a>Event listener</h2>
+
+<h3>
+<a id="default-events" class="anchor" href="#default-events" aria-hidden="true"><span class="octicon octicon-link"></span></a>Default events</h3>
+
+<p>nv-left, nv-right, nv-up, nv-down, nv-enter</p>
+
+<h3>
+<a id="how-to-add-event-handler" class="anchor" href="#how-to-add-event-handler" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to add event handler</h3>
+
+<div class="highlight highlight-js"><pre>
+<span class="pl-s3">document</span>.<span class="pl-sc">body</span>.addEventListener(<span class="pl-s1"><span class="pl-pds">'</span>nv-left<span class="pl-pds">'</span></span>, <span class="pl-st">function</span> (<span class="pl-vpf">event</span>) {
+    <span class="pl-c">// logic</span>
+});
+</pre></div>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Navigation maintained by <a href="https://github.com/ahiipsa">ahiipsa</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
