@@ -1,0 +1,27 @@
+{
+  "name": "navigation",
+  "version": "1.0.0",
+  "homepage": "https://ahiipsa.github.io/navigation",
+  "authors": [
+    "Sergey Karasev <ahiipsa@gmail.com>"
+  ],
+  "description": "keyboard navigation",
+  "main": "dist/navigation.min.js",
+  "ignore": [
+    "demo",
+    "src",
+    ".gitignore",
+    ".gulpfile",
+    "package.json"
+  ],
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "keyboard",
+    "navigation",
+    "smarttv",
+    "tv"
+  ],
+  "license": "MIT"
+}
