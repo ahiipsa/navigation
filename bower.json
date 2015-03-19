@@ -11,7 +11,7 @@
     "demo",
     "src",
     ".gitignore",
-    ".gulpfile",
+    "gulpfile.js",
     "package.json"
   ],
   "moduleType": [
