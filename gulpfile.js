@@ -2,14 +2,7 @@ var gulp = require('gulp'),
     uglify = require('gulp-uglify'),
     rename = require('gulp-rename');
 
-
-
 gulp.task('default', ['copy', 'compress']);
-
-
-// copy to dist
-
-// compress
 
 gulp.task('copy', function () {
     gulp.src('src/navigation.js')
@@ -27,9 +20,6 @@ gulp.task('compress', function() {
                     global_defs: {
                         DEBUG: false
                     }
-                },
-                output: {
-                    source_map: true
                 }
             }
         ))

@@ -1,11 +1,11 @@
 {
   "name": "navigation",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "homepage": "https://ahiipsa.github.io/navigation",
   "authors": [
     "Sergey Karasev <ahiipsa@gmail.com>"
   ],
-  "description": "keyboard navigation",
+  "description": "Keyboard navigation for Smart TV applications",
   "main": "dist/navigation.min.js",
   "ignore": [
     "demo",

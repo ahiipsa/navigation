@@ -1,11 +1,8 @@
 {
   "name": "navigation",
-  "version": "1.0.0",
-  "description": "build",
+  "version": "1.0.1",
+  "description": "Keyboard navigation for Smart TV applications",
   "main": "index.js",
-  "dependencies": {
-    "gulp": "^3.8.11"
-  },
   "devDependencies": {
     "gulp": "^3.8.11",
     "gulp-rename": "^1.2.0",

@@ -34,7 +34,7 @@ todo...
     
 ```
 
-## Class
+## Style, CSS class
 
 - `nv-scope` add for scopes element
 - `nv-scope-current` add for current scope element
@@ -61,15 +61,15 @@ document.body.addEventListener('nv-left', function (event) {
 
 ```
 
-### Default events
+### Default event list
 
 nv-left, nv-up, nv-right, nv-down, nv-enter, nv-back, nv-red, nv-green, nv-yellow, nv-blue, nv-rw, nv-stop, nv-play, nv-ff, nv-ch_up, nv-ch_down, nv-info, nv-mic
 
-or use:
+or public api:
 
 ```js
 
-var keyMapping = navigation.getKeyMapping();
+console.table( navigation.getKeyMapping() );
 
 ```
 
