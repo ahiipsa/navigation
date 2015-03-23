@@ -8,6 +8,24 @@ Keyboard navigation for Smart TV applications
 
 [navigation.tar.gz](https://github.com/ahiipsa/navigation/tarball/master)
 
+## CDN
+
+dev:
+
+```html
+
+<link rel="stylesheet" href="https://cdn.rawgit.com/ahiipsa/navigation/master/dist/navigation.js">
+
+```
+
+min:
+
+```html
+
+<link rel="stylesheet" href="https://cdn.rawgit.com/ahiipsa/navigation/master/dist/navigation.min.js">
+
+```
+
 ## Install with Bower
 
 `bower install navigation`
