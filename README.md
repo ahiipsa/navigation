@@ -14,7 +14,7 @@ dev:
 
 ```html
 
-<script type="text/javascript" src="https://cdn.rawgit.com/ahiipsa/navigation/master/dist/navigation.js"></script>
+<script type="text/javascript" src="https://cdn.rawgit.com/ahiipsa/navigation/1.0.2/dist/navigation.js"></script>
 
 ```
 
@@ -22,7 +22,7 @@ min:
 
 ```html
 
-<script type="text/javascript" src="https://cdn.rawgit.com/ahiipsa/navigation/master/dist/navigation.min.js"></script>
+<script type="text/javascript" src="https://cdn.rawgit.com/ahiipsa/navigation/1.0.2/dist/navigation.min.js"></script>
 
 ```
 
