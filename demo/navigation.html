@@ -11,7 +11,7 @@
         <div class="row example-1">
             <div class="col-md-6">
                 <h1>Scope 1</h1>
-                <div nv-scope="scope1" nv-scope-current class="scope">
+                <div nv-scope="scope1" nv-scope-current>
                     <div class="block-container">
                         <div nv-el class="block yellow"></div>
                         <div nv-el class="block yellow"></div>
@@ -33,7 +33,7 @@
             </div>
             <div class="col-md-6" >
                 <h1>Scope 2</h1>
-                <div nv-scope="scope2" class="example-1 scope">
+                <div nv-scope="scope2" class="example-1">
                     <div id="scope2-scope1" nv-el class="block green btn btn-default">to scope 1</div>
                     <div class="block yellow" nv-el></div>
                     <div class="block yellow" nv-el></div>
@@ -45,7 +45,7 @@
         <div class="row example-2">
             <div class="col-md-6">
                 <h1>Scope 3 scroll</h1>
-                <div id="scroll" nv-scope="scope3" class="scope">
+                <div id="scroll" nv-scope="scope3">
                     <div class="wide-container">
                         <div nv-el nv-el-current class="block yellow"></div>
                         <div nv-el class="block yellow"></div>
@@ -143,10 +143,11 @@
             }
         }
     </script>
-    <script type="text/javascript" src="https://cdn.rawgit.com/ahiipsa/navigation/master/dist/navigation.js"></script>
+    <script type="text/javascript" src="../dist/navigation.js"></script>
     <script type="text/javascript">
-        var scope1scope2 = document.getElementById('scope1-scope2')
-        scope1scope2.addEventListener('nventer', function (event) {
+        var scope1scope2 = document.getElementById('scope1-scope2');
+
+        scope1scope2.addEventListener('nv-enter', function (event) {
                     navigation.changeScope('scope2');
                 });
         scope1scope2.addEventListener('click', function (event) {

@@ -106,6 +106,8 @@
             _remove.call(element);
         };
 
+        addClass(element, options.attrScope);
+
         return self;
     };
 
@@ -287,6 +289,7 @@
         }
 
         this.addElementToScope(scopeName, element);
+        addClass(element, options.attrElement);
     };
 
 
@@ -605,7 +608,15 @@
 
 
     function removeClass(element, className) {
-        element.className = element.className.replace(className, '').trim();
+        var classes = element.className.split(' ');
+
+        for(var i= (classes.length-1); i >= 0; i--) {
+            if (classes[i] == className) {
+                classes.splice(i, 1);
+            }
+        }
+
+        element.className = classes.join(' ');
     }
 
 

@@ -10,7 +10,7 @@ body {
     display: block;
 }
 
-.example-1 .scope {
+.example-1 .nv-scope {
     padding: 15px;
     margin: 0;
 }
@@ -19,7 +19,7 @@ body {
     float: left;
 }
 
-.example-2 .scope {
+.example-2 .nv-scope {
     width: 600px;
     height: 150px;
     padding: 0px;
@@ -70,7 +70,7 @@ body {
     background-color: #7CB342;
 }
 
-.scope {
+.nv-scope {
     display: inline-block;
     position: relative;
     box-sizing: border-box;
