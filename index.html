@@ -32,36 +32,46 @@
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
         <h2>
-<a id="navigation" class="anchor" href="#navigation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Navigation</h2>
+<a id="smart-tv-navigation" class="anchor" href="#smart-tv-navigation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Smart TV navigation</h2>
 
-<p>For application that use the keyboard (Smart TV)</p>
+<p>Keyboard navigation for Smart TV applications</p>
 
 <h2>
-<a id="install" class="anchor" href="#install" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install</h2>
+<a id="download" class="anchor" href="#download" aria-hidden="true"><span class="octicon octicon-link"></span></a>Download</h2>
 
-<p>bower: </p>
+<p><a href="https://github.com/ahiipsa/navigation/zipball/master">navigation.zip</a></p>
+
+<p><a href="https://github.com/ahiipsa/navigation/tarball/master">navigation.tar.gz</a></p>
+
+<h2>
+<a id="install-with-bower" class="anchor" href="#install-with-bower" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install with Bower</h2>
 
 <p><code>bower install navigation</code></p>
+
+<h2>
+<a id="install-with-npm" class="anchor" href="#install-with-npm" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install with npm</h2>
+
+<p>todo...</p>
 
 <h2>
 <a id="attributes" class="anchor" href="#attributes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Attributes</h2>
 
 <ul>
 <li>
-<code>nv-scope</code> - declared scope for navigation</li>
+<code>nv-scope</code> create scope</li>
 <li>
-<code>nv-scope-current</code> - marked and set this scope as active for first load</li>
+<code>nv-scope-current</code> activate scope after bootstrap</li>
 <li>
-<code>nv-el</code> - navigation element</li>
+<code>nv-el</code> navigation element</li>
 <li>
-<code>nv-el-current</code> - marked and set this element as active for first load</li>
+<code>nv-el-current</code> activate after bootstrap</li>
 </ul>
 
 <h3>
 <a id="example" class="anchor" href="#example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example</h3>
 
 <div class="highlight highlight-html"><pre>
-    &lt;<span class="pl-ent">div</span> <span class="pl-e">nv-scope</span>=<span class="pl-s1"><span class="pl-pds">"</span>menu<span class="pl-pds">"</span></span> <span class="pl-e">nv-scope-current</span>&gt;
+    &lt;<span class="pl-ent">div</span> <span class="pl-e">nv-scope</span>=<span class="pl-s"><span class="pl-pds">"</span>menu<span class="pl-pds">"</span></span> <span class="pl-e">nv-scope-current</span>&gt;
         &lt;<span class="pl-ent">div</span> <span class="pl-e">nv-el</span> <span class="pl-e">nv-el-current</span>&gt;Element 1&lt;/<span class="pl-ent">div</span>&gt;
         &lt;<span class="pl-ent">div</span> <span class="pl-e">nv-el</span>&gt;Element 2&lt;/<span class="pl-ent">div</span>&gt;
         &lt;<span class="pl-ent">div</span> <span class="pl-e">nv-el</span>&gt;Element 3&lt;/<span class="pl-ent">div</span>&gt;
@@ -73,36 +83,68 @@
 
 <ul>
 <li>
-<code>nv-scope</code> - add for scopes element</li>
+<code>nv-scope</code> add for scopes element</li>
 <li>
-<code>nv-scope-current</code> - add for current scope element</li>
+<code>nv-scope-current</code> add for current scope element</li>
 <li>
-<code>nv-el</code> - add for navigation elements</li>
+<code>nv-el</code> add for navigation elements</li>
 <li>
-<code>nv-el-current</code> - add for current navigation element</li>
+<code>nv-el-current</code> add for current navigation element</li>
 </ul>
 
 <div class="highlight highlight-html"><pre>
-    &lt;<span class="pl-ent">div</span> <span class="pl-e">nv-scope</span>=<span class="pl-s1"><span class="pl-pds">"</span>menu<span class="pl-pds">"</span></span> <span class="pl-e">class</span>=<span class="pl-s1"><span class="pl-pds">"</span>nv-scope nv-scope-current<span class="pl-pds">"</span></span> <span class="pl-e">nv-scope-current</span>&gt;
-        &lt;<span class="pl-ent">div</span> <span class="pl-e">nv-el</span> <span class="pl-e">nv-el-current</span> <span class="pl-e">class</span>=<span class="pl-s1"><span class="pl-pds">"</span>nv-el nv-el-current<span class="pl-pds">"</span></span>&gt;Element 1&lt;/<span class="pl-ent">div</span>&gt;
-        &lt;<span class="pl-ent">div</span> <span class="pl-e">nv-el</span> <span class="pl-e">class</span>=<span class="pl-s1"><span class="pl-pds">"</span>nv-el<span class="pl-pds">"</span></span>&gt;Element 2&lt;/<span class="pl-ent">div</span>&gt;
-        &lt;<span class="pl-ent">div</span> <span class="pl-e">nv-el</span> <span class="pl-e">class</span>=<span class="pl-s1"><span class="pl-pds">"</span>nv-el<span class="pl-pds">"</span></span>&gt;Element 3&lt;/<span class="pl-ent">div</span>&gt;
+    &lt;<span class="pl-ent">div</span> <span class="pl-e">nv-scope</span>=<span class="pl-s"><span class="pl-pds">"</span>menu<span class="pl-pds">"</span></span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>nv-scope nv-scope-current<span class="pl-pds">"</span></span> <span class="pl-e">nv-scope-current</span>&gt;
+        &lt;<span class="pl-ent">div</span> <span class="pl-e">nv-el</span> <span class="pl-e">nv-el-current</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>nv-el nv-el-current<span class="pl-pds">"</span></span>&gt;Element 1&lt;/<span class="pl-ent">div</span>&gt;
+        &lt;<span class="pl-ent">div</span> <span class="pl-e">nv-el</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>nv-el<span class="pl-pds">"</span></span>&gt;Element 2&lt;/<span class="pl-ent">div</span>&gt;
+        &lt;<span class="pl-ent">div</span> <span class="pl-e">nv-el</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>nv-el<span class="pl-pds">"</span></span>&gt;Element 3&lt;/<span class="pl-ent">div</span>&gt;
     &lt;/<span class="pl-ent">div</span>&gt;
 </pre></div>
 
 <h2>
 <a id="event-listener" class="anchor" href="#event-listener" aria-hidden="true"><span class="octicon octicon-link"></span></a>Event listener</h2>
 
+<div class="highlight highlight-js"><pre>
+<span class="pl-c1">document</span>.<span class="pl-c1">body</span>.addEventListener(<span class="pl-s"><span class="pl-pds">'</span>nv-left<span class="pl-pds">'</span></span>, <span class="pl-k">function</span> (<span class="pl-smi">event</span>) {
+    <span class="pl-c">// logic</span>
+});
+</pre></div>
+
 <h3>
 <a id="default-events" class="anchor" href="#default-events" aria-hidden="true"><span class="octicon octicon-link"></span></a>Default events</h3>
 
-<p>nv-left, nv-right, nv-up, nv-down, nv-enter</p>
+<p>nv-left, nv-up, nv-right, nv-down, nv-enter, nv-back, nv-red, nv-green, nv-yellow, nv-blue, nv-rw, nv-stop, nv-play, nv-ff, nv-ch_up, nv-ch_down, nv-info, nv-mic</p>
 
-<h3>
-<a id="how-to-add-event-handler" class="anchor" href="#how-to-add-event-handler" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to add event handler</h3>
+<p>or use:</p>
 
 <div class="highlight highlight-js"><pre>
-<span class="pl-s3">document</span>.<span class="pl-sc">body</span>.addEventListener(<span class="pl-s1"><span class="pl-pds">'</span>nv-left<span class="pl-pds">'</span></span>, <span class="pl-st">function</span> (<span class="pl-vpf">event</span>) {
+<span class="pl-k">var</span> keyMapping <span class="pl-k">=</span> navigation.getKeyMapping();
+</pre></div>
+
+<h3>
+<a id="custom-events-and-key-mapping" class="anchor" href="#custom-events-and-key-mapping" aria-hidden="true"><span class="octicon octicon-link"></span></a>Custom events and key mapping</h3>
+
+<div class="highlight highlight-js"><pre>
+<span class="pl-c">// example keyCode: 'eventName'</span>
+
+<span class="pl-k">var</span> keyMapping <span class="pl-k">=</span> {
+    <span class="pl-c1">403</span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>red<span class="pl-pds">'</span></span>,
+    <span class="pl-c1">404</span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>green<span class="pl-pds">'</span></span>,
+    <span class="pl-c1">405</span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>yellow<span class="pl-pds">'</span></span>,
+    <span class="pl-c1">406</span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>blue<span class="pl-pds">'</span></span>,
+    <span class="pl-c1">412</span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>rw<span class="pl-pds">'</span></span>,
+    <span class="pl-c1">413</span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>stop<span class="pl-pds">'</span></span>,
+    <span class="pl-c1">415</span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>play<span class="pl-pds">'</span></span>,
+    <span class="pl-c1">417</span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>ff<span class="pl-pds">'</span></span>,
+    <span class="pl-c1">33</span><span class="pl-k">:</span>  <span class="pl-s"><span class="pl-pds">'</span>ch_up<span class="pl-pds">'</span></span>,
+    <span class="pl-c1">34</span><span class="pl-k">:</span>  <span class="pl-s"><span class="pl-pds">'</span>ch_down<span class="pl-pds">'</span></span>,
+    <span class="pl-c1">457</span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>info<span class="pl-pds">'</span></span>,
+    <span class="pl-c1">461</span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>back<span class="pl-pds">'</span></span>, <span class="pl-c">// return</span>
+    <span class="pl-c1">1015</span><span class="pl-k">:</span><span class="pl-s"><span class="pl-pds">'</span>mic<span class="pl-pds">'</span></span>
+};
+
+navigation.addKeyMapping(keyMapping);
+
+<span class="pl-c1">document</span>.<span class="pl-c1">body</span>.addEventListener(<span class="pl-s"><span class="pl-pds">'</span>nv-play<span class="pl-pds">'</span></span>, <span class="pl-k">function</span> (<span class="pl-smi">event</span>) {
     <span class="pl-c">// logic</span>
 });
 </pre></div>
