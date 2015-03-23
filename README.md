@@ -1,18 +1,27 @@
-## Navigation
-For application that use the keyboard (Smart TV)
+## Smart TV navigation
 
+Keyboard navigation for Smart TV applications
 
-## Install
+## Download
+ 
+[navigation.zip](https://github.com/ahiipsa/navigation/zipball/master)
 
-bower: 
+[navigation.tar.gz](https://github.com/ahiipsa/navigation/tarball/master)
+
+## Install with Bower
 
 `bower install navigation`
+
+## Install with npm
+
+todo...
  
 ## Attributes
-- `nv-scope` - declared scope for navigation
-- `nv-scope-current` - marked and set this scope as active for first load
-- `nv-el` - navigation element
-- `nv-el-current` - marked and set this element as active for first load
+
+- `nv-scope` create scope
+- `nv-scope-current` activate scope after bootstrap
+- `nv-el` navigation element
+- `nv-el-current` activate after bootstrap
 
 ### Example
 ```html
@@ -27,10 +36,10 @@ bower:
 
 ## Class
 
-- `nv-scope` - add for scopes element
-- `nv-scope-current` - add for current scope element
-- `nv-el` - add for navigation elements
-- `nv-el-current` - add for current navigation element
+- `nv-scope` add for scopes element
+- `nv-scope-current` add for current scope element
+- `nv-el` add for navigation elements
+- `nv-el-current` add for current navigation element
 
 ```html
 
@@ -44,12 +53,6 @@ bower:
 
 ## Event listener
 
-### Default events
-nv-left, nv-right, nv-up, nv-down, nv-enter
-
-
-### How to add event handler
-
 ```js
 
 document.body.addEventListener('nv-left', function (event) {
@@ -58,5 +61,44 @@ document.body.addEventListener('nv-left', function (event) {
 
 ```
 
+### Default events
 
+nv-left, nv-up, nv-right, nv-down, nv-enter, nv-back, nv-red, nv-green, nv-yellow, nv-blue, nv-rw, nv-stop, nv-play, nv-ff, nv-ch_up, nv-ch_down, nv-info, nv-mic
 
+or use:
+
+```js
+
+var keyMapping = navigation.getKeyMapping();
+
+```
+
+### Custom events and key mapping
+
+```js
+
+// example keyCode: 'eventName'
+
+var keyMapping = {
+    403: 'red',
+    404: 'green',
+    405: 'yellow',
+    406: 'blue',
+    412: 'rw',
+    413: 'stop',
+    415: 'play',
+    417: 'ff',
+    33:  'ch_up',
+    34:  'ch_down',
+    457: 'info',
+    461: 'back', // return
+    1015:'mic'
+};
+
+navigation.addKeyMapping(keyMapping);
+ 
+document.body.addEventListener('nv-play', function (event) {
+    // logic
+});
+
+```

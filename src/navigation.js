@@ -20,12 +20,25 @@
         this.prevScope = null;
 
         this.keyMapping = {
-            37: 'left',
-            38: 'up',
-            39: 'right',
-            40: 'down',
-            13: 'enter',
-            27: 'back'
+            37:  'left',
+            38:  'up',
+            39:  'right',
+            40:  'down',
+            13:  'enter',
+            27:  'back',
+            403: 'red',
+            404: 'green',
+            405: 'yellow',
+            406: 'blue',
+            412: 'rw',
+            413: 'stop',
+            415: 'play',
+            417: 'ff',
+            33:  'ch_up',
+            34:  'ch_down',
+            457: 'info',
+            461: 'back', // return
+            1015:'mic'
         }
     };
 
