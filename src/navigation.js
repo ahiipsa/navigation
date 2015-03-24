@@ -556,29 +556,8 @@
 
 
     function scroll(scrollContainer, currentElement, nextElement){
-        // push scroll
-        var ymin = scrollContainer.scrollTop,
-            ymax = scrollContainer.scrollTop + scrollContainer.offsetHeight,
-            xmin = scrollContainer.scrollLeft,
-            xmax = scrollContainer.scrollLeft + scrollContainer.offsetWidth,
-            ytop = scrollContainer.offsetTop,
-            ybottom = nextElement.offsetTop + nextElement.offsetHeight,
-            xleft = nextElement.offsetLeft,
-            xright = nextElement.offsetLeft + nextElement.offsetWidth;
-
-        var inScreenV = ymin < ytop && ymax > ybottom,
-            inScreenH = xmin < xleft && xmax > xright;
-
-        var scrollDistanceY = ytop - currentElement.offsetTop,
-            scrollDistanceX = xleft - currentElement.offsetLeft;
-
-        if(inScreenV == false){
-            scrollContainer.scrollTop = scrollContainer.scrollTop + scrollDistanceY;
-        }
-
-        if(inScreenH == false){
-            scrollContainer.scrollLeft = scrollContainer.scrollLeft + scrollDistanceX;
-        }
+        scrollContainer.scrollLeft = nextElement.offsetLeft + (nextElement.offsetWidth / 2) - (scrollContainer.offsetWidth / 2);
+        scrollContainer.scrollTop = nextElement.offsetTop + (nextElement.offsetHeight / 2) - (scrollContainer.offsetHeight / 2);
     }
 
 
