@@ -20,20 +20,24 @@ body {
 }
 
 .example-2 .nv-scope {
-    width: 600px;
-    height: 150px;
+    width: 700px;
+    height: 300px;
     padding: 0px;
     margin: 0;
     overflow: scroll;
 }
 
 .example-2 .block {
-    position: relative;
+    box-sizing: border-box;
     float: left;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    border: 1px solid #424242;
 }
 
 .example-2 .wide-container {
-    width: 1500px;
+    width: 1000px;
     height: 150px;
     position: relative;
     padding: 0;
