@@ -2,15 +2,26 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; Charset=UTF-8"/>
-    <title>Navigation</title>
+    <title>Demo - Smart TV Navigation</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css"/>
 </head>
 <body ng-controller="MainCtrl">
     <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                  <a id="forkme_banner" href="https://github.com/ahiipsa/navigation">View on GitHub</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Demo - Smart TV Navigation</h1>
+                <p>Keyboard navigation for Smart TV applications </p>
+            </div>
+        </div>
         <div class="row example-1">
             <div class="col-md-6">
-                <h1>Scope 1</h1>
+                <h2>Scope 1</h2>
                 <div nv-scope="scope1" nv-scope-current>
                     <div class="block-container">
                         <div nv-el class="block yellow"></div>
@@ -32,7 +43,7 @@
                 </div>
             </div>
             <div class="col-md-6" >
-                <h1>Scope 2</h1>
+                <h2>Scope 2</h2>
                 <div nv-scope="scope2" class="example-1">
                     <div id="scope2-scope1" nv-el class="block green btn btn-default">to scope 1</div>
                     <div class="block yellow" nv-el></div>
@@ -44,7 +55,7 @@
         </div>
         <div class="row example-2">
             <div class="col-md-6">
-                <h1>Scope 3 scroll</h1>
+                <h2>Scope 3 scroll</h2>
                 <div id="scroll" nv-scope="scope3">
                     <div class="wide-container">
                         <div nv-el nv-el-current class="block yellow"></div>
@@ -180,10 +191,10 @@
             navigation.changeScope('scope1');
         });
 
-        document.body.addEventListener('nv-move', function (event) {
-            var element = navigation.getCurrentScope().getCurrentElement();
-            drawFOV(element, navigation.getOptions().FOV);
-        });
+//        document.body.addEventListener('nv-move', function (event) {
+//            var element = navigation.getCurrentScope().getCurrentElement();
+//            drawFOV(element, navigation.getOptions().FOV);
+//        });
 
     </script>
 </body>
