@@ -2,6 +2,18 @@ body {
     background-color: #F9F9F9;
 }
 
+#forkme_banner {
+    display: block;
+    position: relative;
+    padding: 10px 50px 10px 50px;
+    color: #fff;
+    background: url('blacktocat.png') #333333 no-repeat 10px 50%;
+    font-weight: 700;
+    box-shadow: 0 0 10px rgba(0,0,0,.5);
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+}
+
 .block-container {
     display: inline-block;
 }
@@ -63,11 +75,11 @@ body {
 }
 
 .orange {
-    background-color: orange;
+    background-color: #FFB74D;
 }
 
 .yellow {
-    background-color: #FFCD40;
+    background-color: #FFD54F;
 }
 
 .green {
