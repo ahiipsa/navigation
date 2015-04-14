@@ -7,6 +7,9 @@ gulp.task('default', ['copy', 'compress']);
 gulp.task('copy', function () {
     gulp.src('src/navigation.js')
         .pipe(gulp.dest('dist'));
+
+    gulp.src('src/navigation.css')
+        .pipe(gulp.dest('dist'));
 });
 
 

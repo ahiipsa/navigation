@@ -11,58 +11,73 @@
         attrElementCurrent: prefix + '-el-current'
     };
 
-
     var Nav = function(){
         this.isMouseEnable = true;
         this.mouseEnableTimeout = true;
         this._scopes = {};
         this._currentScope = null;
-        this.prevScope = null;
+        this._prevScope = null;
 
         this.keyMapping = {
-            37:  'left',
-            38:  'up',
-            39:  'right',
-            40:  'down',
-            13:  'enter',
-            27:  'back',
-            403: 'red',
-            404: 'green',
-            405: 'yellow',
-            406: 'blue',
-            412: 'rw',
-            413: 'stop',
-            415: 'play',
-            417: 'ff',
-            33:  'ch_up',
-            34:  'ch_down',
-            457: 'info',
-            461: 'back', // return
-            1015:'mic'
+            // web and lg smart tv
+            37:     'left',
+            38:     'up',
+            39:     'right',
+            40:     'down',
+            13:     'enter',
+            27:     'back',
+            403:    'red',
+            404:    'green',
+            405:    'yellow',
+            406:    'blue',
+            412:    'rw',
+            413:    'stop',
+            415:    'play',
+            417:    'ff',
+            33:     'ch_up',
+            34:     'ch_down',
+            457:    'info',
+            461:    'back', // return
+            1015:   'mic',
+            // samsung smart tv
+            4:      'left',
+            5:      'right',
+            29460:  'up',
+            29461:  'down',
+            29443:  'enter'
         }
     };
 
 
     Nav.prototype.initialize = function() {
         var self = this,
-            body = window.document.body,
+            body = document.body,
             navElements = getElementsByAttributeName(body.children, options.attrElement);
 
-        body.addEventListener('keydown', function (event) {
-            self.onKeyDown(event);
-        });
+        body.addEventListener('keydown', self);
 
         navElements.forEach(function (element) {
             self.addElement(element);
         });
 
         if(!this.getCurrentScope()){
-            DEBUG && console.info('not found current scope');
+            DEBUG && console.log('not found current scope');
         }
 
         return this;
     };
 
+    Nav.prototype.refresh = function () {
+        this.deinitialize();
+        this.initialize();
+    };
+
+    Nav.prototype.deinitialize = function () {
+        this._scopes = {};
+        this._currentScope = null;
+        this._prevScope = null;
+        document.body.removeEventListener('keydown', self);
+    };
 
     Nav.prototype.getOptions = function () {
         var opt = clone(options);
@@ -290,6 +305,12 @@
 
         this.addElementToScope(scopeName, element);
         addClass(element, options.attrElement);
+    };
+
+
+
+    Nav.prototype.handleEvent = function (event) {
+        this.onKeyDown(event);
     };
 
 
@@ -615,8 +636,8 @@
         return copy;
     }
 
-
+    var nav = new Nav();
     window.navigation = function () {
-        return new Nav().initialize();
+        return nav.initialize();
     }();
 })();
