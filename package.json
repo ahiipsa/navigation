@@ -1,6 +1,6 @@
 {
   "name": "navigation",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Keyboard navigation for Smart TV applications",
   "main": "index.js",
   "devDependencies": {
