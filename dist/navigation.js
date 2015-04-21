@@ -570,6 +570,7 @@
         }
 
         var nextElement = navElements[index];
+        nextElement.focus();
         scroll(this.element, current, nextElement);
 
         return nextElement;
