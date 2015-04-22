@@ -338,15 +338,7 @@
 
             if (nextElement) {
                 currentScope.setCurrentElement(nextElement);
-
-                var eventMove = new Event(prefix + '-move', {
-                    bubbles: true,
-                    cancelable: true,
-                    target: currentElement,
-                    toElement: currentElement
-                });
-
-                currentElement.dispatchEvent(eventMove);
+                this.trigger('move', currentElement);
             }
 
             if(self.mouseEnableTimeout){
@@ -361,14 +353,7 @@
 
         // if declared event / dispatch declared event
         if(eventName){
-            var navEvent = new Event( prefix + '-' + eventName, {
-                bubbles: true,
-                cancelable: true,
-                target: currentElement,
-                toElement: currentElement
-            });
-
-            currentElement.dispatchEvent(navEvent);
+            this.trigger(eventName, currentElement);
         }
 
         var log = document.getElementById('nav-event-info');
@@ -381,6 +366,18 @@
             '<br /> eventType: ' + event.type +
             '<br /> navScope: ' + currentScope.name;
         }
+    };
+
+
+    Nav.prototype.trigger = function (eventName, target) {
+        var navEvent = new Event( prefix + '-' + eventName, {
+            bubbles: true,
+            cancelable: false,
+            target: target,
+            toElement: target
+        });
+
+        target.dispatchEvent(navEvent);
     };
 
 
@@ -493,9 +490,6 @@
         addClass(this.currentElement, options.attrElementCurrent);
 
         this.currentElement.setAttribute(options.attrElementCurrent, 'true');
-
-        // focus on input after first enter
-        // this.currentElement.focus();
     };
 
 
@@ -570,7 +564,6 @@
         }
 
         var nextElement = navElements[index];
-        nextElement.focus();
         scroll(this.element, current, nextElement);
 
         return nextElement;
@@ -578,8 +571,11 @@
 
 
     function scroll(scrollContainer, currentElement, nextElement){
-        scrollContainer.scrollLeft = nextElement.offsetLeft + (nextElement.offsetWidth / 2) - (scrollContainer.offsetWidth / 2);
-        scrollContainer.scrollTop = nextElement.offsetTop + (nextElement.offsetHeight / 2) - (scrollContainer.offsetHeight / 2);
+        var scrollLeft = nextElement.offsetLeft + (nextElement.offsetWidth / 2) - (scrollContainer.offsetWidth / 2);
+        var scrollTop = nextElement.offsetTop + (nextElement.offsetHeight / 2) - (scrollContainer.offsetHeight / 2);
+
+        scrollContainer.scrollLeft = scrollLeft;
+        scrollContainer.scrollTop = scrollTop;
     }
 
 

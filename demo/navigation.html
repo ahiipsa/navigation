@@ -19,6 +19,25 @@
                 <p>Keyboard navigation for Smart TV applications </p>
             </div>
         </div>
+        <!--<div class="row">
+            <div class="col-md-6">
+                <div nv-scope="html5elements">
+                    <p>
+                        <a nv-el nv-el-current style="display: block" href="#">Link</a>
+                    </p>
+
+                    <div class="form-group">
+                        <label>Input</label>
+                        <input nv-el type="text" class="form-control" value="Input" />
+                    </div>
+                    <div class="form-group">
+                        <label> checkbox </label>
+                        <input nv-el type="checkbox" style="display: block" class="form-control" value="1" />
+                    </div>
+
+                </div>
+            </div>
+        </div>-->
         <div class="row example-1">
             <div class="col-md-6">
                 <h2>Scope 1</h2>
@@ -31,14 +50,12 @@
                     <div class="block-container">
                         <div class="block orange inactive">inactive</div>
                         <div nv-el nv-el-current class="block yellow"></div>
-                        <div nv-el class="block yellow"></div>
+                        <div id="scope1-scope2" nv-el class="block green btn n-default">to scope 2</div>
                     </div>
                     <div class="block-container">
                         <div nv-el class="block yellow"></div>
-                        <div id="scope1-scope2" nv-el class="block green btn btn-default">to scope 2</div>
-
-                        <div nv-el class="block yellow"></div>
                         <div id="scope1-scope3" nv-el class="block green btn btn-default">to scope 3</div>
+                        <div nv-el class="block yellow"></div>
                     </div>
                 </div>
             </div>
@@ -95,6 +112,7 @@
                 </div>
             </div>
         </div>
+
     </div>
     <script type="text/javascript">
         var SVG = {
