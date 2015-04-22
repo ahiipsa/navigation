@@ -369,8 +369,9 @@
     };
 
 
-    Nav.prototype.trigger = function (eventName, target) {
-        var navEvent = new Event( prefix + '-' + eventName, {
+    Nav.prototype.trigger = function (name, target) {
+        var eventName = prefix + '-' + name;
+        var navEvent = new Event( eventName, {
             bubbles: true,
             cancelable: false,
             target: target,
@@ -378,6 +379,10 @@
         });
 
         target.dispatchEvent(navEvent);
+
+        if(typeof $ !== 'undefined'){
+            $(target).trigger(eventName);
+        }
     };
 
 
