@@ -18,7 +18,7 @@ dev:
 
 ```html
 
-<script type="text/javascript" src="https://cdn.rawgit.com/ahiipsa/navigation/1.0.3/dist/navigation.js"></script>
+<script type="text/javascript" src="https://rawgit.com/ahiipsa/navigation/1.0.6/dist/navigation.js"></script>
 
 ```
 
@@ -26,7 +26,7 @@ min:
 
 ```html
 
-<script type="text/javascript" src="https://cdn.rawgit.com/ahiipsa/navigation/1.0.3/dist/navigation.min.js"></script>
+<script type="text/javascript" src="https://cdn.rawgit.com/ahiipsa/navigation/1.0.6/dist/navigation.min.js"></script>
 
 ```
 
@@ -37,6 +37,10 @@ min:
 ## Install with npm
 
 todo...
+
+## Or download
+
+[download 1.0.6](https://github.com/ahiipsa/navigation/archive/1.0.6.zip)
  
 ## Attributes
 
@@ -93,6 +97,12 @@ or public api:
 
 console.table( navigation.getKeyMapping() );
 
+```
+
+### Refresh navigation after DOM update
+
+```js
+navigation.refresh();
 ```
 
 ### Custom events and key mapping
