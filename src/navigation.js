@@ -11,6 +11,12 @@
         attrElementCurrent: prefix + '-el-current'
     };
 
+
+    /**
+     * Navigation object
+     * @returns {Nav}
+     * @constructor
+     */
     var Nav = function(){
         if(Nav.instance){
             return Nav.instance;
@@ -20,16 +26,49 @@
         return Nav.instance;
     };
 
+
+    /**
+     * Is mouse control enable
+     * @type {boolean}
+     */
     Nav.prototype.isMouseEnable = true;
 
+
+    /**
+     * Mouse enable timeout
+     * @type {boolean}
+     */
     Nav.prototype.mouseEnableTimeout = true;
 
+
+    /**
+     * Registered navigation scopes
+     * @type {NavScope[]}
+     * @private
+     */
     Nav.prototype._scopes = {};
 
+
+    /**
+     * Current navigation scope
+     * @type {NavScope}
+     */
     Nav.prototype_currentScope = null;
 
+
+    /**
+     * Previous navigation scope
+     * @type {NavScope}
+     * @private
+     */
     Nav.prototype._prevScope = null;
 
+
+    /**
+     * Key mapping key/value table
+     * @type {object}
+     * @private
+     */
     Nav.prototype._keyMapping = {
         // web and lg smart tv
         37:     'left',
@@ -60,6 +99,10 @@
     };
 
 
+    /**
+     * Initialize navigation
+     * @returns {Nav}
+     */
     Nav.prototype.initialize = function() {
         var self = this,
             body = document.body,
@@ -78,6 +121,18 @@
         return this;
     };
 
+
+    /**
+     * Deinitialize navigation
+     */
+    Nav.prototype.deinitialize = function () {
+        this._scopes = {};
+        this._currentScope = null;
+        this._prevScope = null;
+        document.body.removeEventListener('keydown', self);
+    };
+
+
     /**
      * Refresh navigation
      */
@@ -86,12 +141,6 @@
         this.initialize();
     };
 
-    Nav.prototype.deinitialize = function () {
-        this._scopes = {};
-        this._currentScope = null;
-        this._prevScope = null;
-        document.body.removeEventListener('keydown', self);
-    };
 
     /**
      * Return navigation options
@@ -232,6 +281,7 @@
         return this._prevScope;
     };
 
+
     /**
      * @todo throw exception if current scope not exist
      * Return current scope
@@ -296,6 +346,7 @@
         return false;
     };
 
+
     /**
      * @todo throw exception if scope not found
      * Return scope by name
@@ -311,6 +362,7 @@
 
         return scope;
     };
+
 
     /**
      * Return current nav element
@@ -375,7 +427,7 @@
 
     /**
      * Add element to navigation (find scope for element)
-     * @param element
+     * @param {HTMLElement} element
      */
     Nav.prototype.addElement = function (element) {
         var scopeName = null,
@@ -575,6 +627,7 @@
         return this.element;
     };
 
+
     /**
      * Return current element
      * @returns {HTMLElement}
@@ -726,7 +779,7 @@
 
 
     /**
-     *
+     * Function for scroll
      * @param {HTMLElement} scrollContainer
      * @param {HTMLElement} currentElement
      * @param {HTMLElement} nextElement
