@@ -37,10 +37,6 @@ min:
 ## Install with npm
 
 todo...
-
-## Or download
-
-[download 1.0.6](https://github.com/ahiipsa/navigation/archive/1.0.6.zip)
  
 ## Attributes
 
