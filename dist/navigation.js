@@ -12,40 +12,51 @@
     };
 
     var Nav = function(){
-        this.isMouseEnable = true;
-        this.mouseEnableTimeout = true;
-        this._scopes = {};
-        this._currentScope = null;
-        this._prevScope = null;
-
-        this.keyMapping = {
-            // web and lg smart tv
-            37:     'left',
-            38:     'up',
-            39:     'right',
-            40:     'down',
-            13:     'enter',
-            27:     'back',
-            403:    'red',
-            404:    'green',
-            405:    'yellow',
-            406:    'blue',
-            412:    'rw',
-            413:    'stop',
-            415:    'play',
-            417:    'ff',
-            33:     'ch_up',
-            34:     'ch_down',
-            457:    'info',
-            461:    'back', // return
-            1015:   'mic',
-            // samsung smart tv
-            4:      'left',
-            5:      'right',
-            29460:  'up',
-            29461:  'down',
-            29443:  'enter'
+        if(Nav.instance){
+            return Nav.instance;
         }
+
+        Nav.instance = this;
+        return Nav.instance;
+    };
+
+    Nav.prototype.isMouseEnable = true;
+
+    Nav.prototype.mouseEnableTimeout = true;
+
+    Nav.prototype._scopes = {};
+
+    Nav.prototype_currentScope = null;
+
+    Nav.prototype._prevScope = null;
+
+    Nav.prototype._keyMapping = {
+        // web and lg smart tv
+        37:     'left',
+        38:     'up',
+        39:     'right',
+        40:     'down',
+        13:     'enter',
+        27:     'back',
+        403:    'red',
+        404:    'green',
+        405:    'yellow',
+        406:    'blue',
+        412:    'rw',
+        413:    'stop',
+        415:    'play',
+        417:    'ff',
+        33:     'ch_up',
+        34:     'ch_down',
+        457:    'info',
+        461:    'back', // return
+        1015:   'mic',
+        // samsung smart tv
+        4:      'left',
+        5:      'right',
+        29460:  'up',
+        29461:  'down',
+        29443:  'enter'
     };
 
 
@@ -67,6 +78,9 @@
         return this;
     };
 
+    /**
+     * Refresh navigation
+     */
     Nav.prototype.refresh = function () {
         this.deinitialize();
         this.initialize();
@@ -79,29 +93,52 @@
         document.body.removeEventListener('keydown', self);
     };
 
+    /**
+     * Return navigation options
+     * @returns {object}
+     */
     Nav.prototype.getOptions = function () {
         var opt = clone(options);
         return opt;
     };
 
 
+    /**
+     * Return key/value key binding
+     * @returns {object}
+     */
     Nav.prototype.getKeyMapping = function () {
-        return this.keyMapping;
+        return this._keyMapping;
     };
 
 
+    /**
+     * Override current key mapping
+     * @param keyMapping
+     * @returns {Nav}
+     */
     Nav.prototype.setKeyMapping = function (keyMapping) {
-        this.keyMapping = keyMapping;
+        this._keyMapping = keyMapping;
         return this;
     };
 
 
+    /**
+     * Add keyMapping to current nav
+     * @param keyMapping
+     * @returns {Nav}
+     */
     Nav.prototype.addKeyMapping = function (keyMapping) {
-        this.keyMapping = mergeObjects(this.keyMapping, keyMapping);
+        this._keyMapping = mergeObjects(this._keyMapping, keyMapping);
         return this;
     };
 
 
+    /**
+     * Add scope to navigation
+     * @param {HTMLElement} element
+     * @returns {Nav}
+     */
     Nav.prototype.addScope = function (element) {
         var self = this,
             navScope = new NavScope(element);
@@ -127,6 +164,10 @@
     };
 
 
+    /**
+     * Remove scope from navigation
+     * @param {string} scope
+     */
     Nav.prototype.removeScope = function (scope) {
         var scopeName = '';
 
@@ -146,6 +187,12 @@
     };
 
 
+    /**
+     * @todo change attr to {string} scopeName
+     * Check is scope is current
+     * @param {NavScope} scope
+     * @returns {boolean}
+     */
     Nav.prototype.isCurrentScope = function (scope) {
         if(scope === this.getCurrentScope()){
             return true;
@@ -155,6 +202,11 @@
     };
 
 
+    /**
+     * Change current scope to scope
+     * @param {string} scopeName
+     * @returns {Nav}
+     */
     Nav.prototype.changeScope = function (scopeName) {
         var scope = this.getScopes()[scopeName];
 
@@ -168,6 +220,10 @@
     };
 
 
+    /**
+     * Return previous scope
+     * @returns {NavScope}
+     */
     Nav.prototype.getPrevScope = function () {
         if(!this._prevScope){
             return false;
@@ -176,6 +232,11 @@
         return this._prevScope;
     };
 
+    /**
+     * @todo throw exception if current scope not exist
+     * Return current scope
+     * @returns {NavScope}
+     */
     Nav.prototype.getCurrentScope = function () {
         if(!this._currentScope){
             return false;
@@ -185,6 +246,11 @@
     };
 
 
+    /**
+     * Set current scope
+     * @param {NavScope} scope
+     * @returns {Nav}
+     */
     Nav.prototype.setCurrentScope = function (scope) {
         this._prevScope = this.getCurrentScope();
         var prevElement = null;
@@ -208,19 +274,34 @@
     };
 
 
+    /**
+     * Return registered scopes
+     * @returns {NavScope[]}
+     */
     Nav.prototype.getScopes = function () {
         return this._scopes;
     };
 
 
+    /**
+     * @todo resolve if scope not found
+     * @param {Event} event
+     * @returns {string}
+     */
     Nav.prototype.getEventName = function(event) {
-        if (typeof this.keyMapping[event.keyCode] !== 'undefined') {
-            return this.keyMapping[event.keyCode];
+        if (typeof this._keyMapping[event.keyCode] !== 'undefined') {
+            return this._keyMapping[event.keyCode];
         }
 
         return false;
     };
 
+    /**
+     * @todo throw exception if scope not found
+     * Return scope by name
+     * @param scopeName
+     * @returns {NavScope}
+     */
     Nav.prototype.getScope = function (scopeName) {
         var scope = this.getScopes()[scopeName];
 
@@ -231,10 +312,21 @@
         return scope;
     };
 
+    /**
+     * Return current nav element
+     * @returns {HTMLElement}
+     */
     Nav.prototype.getCurrentElement = function () {
         return this.getCurrentScope().getCurrentElement();
-    }
+    };
 
+
+    /**
+     * Add element to scope
+     * @param {string} scopeName
+     * @param {HTMLElement} element
+     * @returns {Nav}
+     */
     Nav.prototype.addElementToScope = function (scopeName, element){
         var self = this,
             scope = this.getScope(scopeName)
@@ -281,8 +373,11 @@
     };
 
 
+    /**
+     * Add element to navigation (find scope for element)
+     * @param element
+     */
     Nav.prototype.addElement = function (element) {
-
         var scopeName = null,
             _el = element,
             attrName = options.attrScope;
@@ -296,7 +391,6 @@
             throw new Error(element + ' not belong to scope');
         }
 
-
         var scope = this.getScope(scopeName);
 
         if(!scope){
@@ -308,12 +402,20 @@
     };
 
 
-
+    /**
+     * Handle event interface
+     * @param {Event} event
+     */
     Nav.prototype.handleEvent = function (event) {
         this.onKeyDown(event);
     };
 
 
+    /**
+     * Main function in navigation for handle all keyboard events
+     * and trigger registered event
+     * @param {Event} event
+     */
     Nav.prototype.onKeyDown = function(event) {
         var self = this,
             currentScope = self.getCurrentScope();
@@ -369,9 +471,14 @@
     };
 
 
+    /**
+     * Trigger navigation event
+     * @param name
+     * @param target
+     */
     Nav.prototype.trigger = function (name, target) {
         var eventName = prefix + '-' + name;
-        var navEvent = new Event( eventName, {
+        var navEvent = new Event(eventName, {
             bubbles: true,
             cancelable: false,
             target: target,
@@ -380,6 +487,7 @@
 
         target.dispatchEvent(navEvent);
 
+        // jquery support
         if(typeof $ !== 'undefined'){
             $(target).trigger(eventName);
         }
@@ -398,6 +506,10 @@
     };
 
 
+    /**
+     * Activate scope
+     * @returns {NavScope}
+     */
     NavScope.prototype.activate = function () {
         console.log(this.name, ': activated, elements', this.navigationElements.length);
 
@@ -415,6 +527,11 @@
     };
 
 
+    /**
+     * Add element to scope
+     * @param {HTMLElement} element
+     * @returns {NavScope}
+     */
     NavScope.prototype.addElement = function (element) {
         if(this.navigationElements.indexOf(element) > -1){
             return this;
@@ -426,6 +543,11 @@
     };
 
 
+    /**
+     * Remove element from scope
+     * @param {HTMLElement} element
+     * @returns {NavScope}
+     */
     NavScope.prototype.removeElement = function (element) {
         var index = this.navigationElements.indexOf(element);
 
@@ -438,9 +560,13 @@
         }
 
         return this;
-    }
+    };
 
 
+    /**
+     * Return scope html container
+     * @returns {HTMLElement}
+     */
     NavScope.prototype.getScopeElement = function () {
         if(!this.element){
             return false;
@@ -449,6 +575,10 @@
         return this.element;
     };
 
+    /**
+     * Return current element
+     * @returns {HTMLElement}
+     */
     NavScope.prototype.getCurrentElement = function() {
         if(this.currentElement){
             return this.currentElement;
@@ -460,18 +590,29 @@
         for (var i = 0, n = navElements.length; i < n; i++) {
             if (this.isCurrentElement(navElements[i])) {
                 currentElement = navElements[i];
+                // @todo break loop
             }
+
         }
 
         return currentElement;
     };
 
 
+    /**
+     * Get all navigation elements from scope
+     * @returns {HTMLElement[]}
+     */
     NavScope.prototype.getNavigationElements = function () {
         return this.navigationElements;
     };
 
 
+    /**
+     * Check is current element
+     * @param {HTMLElement} element
+     * @returns {boolean}
+     */
     NavScope.prototype.isCurrentElement = function (element) {
         var attr = element.getAttribute(options.attrElementCurrent);
         if (attr === '' || attr === 'true') {
@@ -482,6 +623,10 @@
     };
 
 
+    /**
+     * Set current element
+     * @param {HTMLElement} element
+     */
     NavScope.prototype.setCurrentElement = function(element) {
         var prevElement = this.getCurrentElement();
         this.currentElement = element;
@@ -498,6 +643,11 @@
     };
 
 
+    /**
+     * Get next element by direction
+     * @param {string} direction
+     * @returns {HTMLElement}
+     */
     NavScope.prototype.getNextElement = function(direction) {
         var current = this.getCurrentElement();
 
@@ -575,6 +725,12 @@
     };
 
 
+    /**
+     *
+     * @param {HTMLElement} scrollContainer
+     * @param {HTMLElement} currentElement
+     * @param {HTMLElement} nextElement
+     */
     function scroll(scrollContainer, currentElement, nextElement){
         var scrollLeft = nextElement.offsetLeft + (nextElement.offsetWidth / 2) - (scrollContainer.offsetWidth / 2);
         var scrollTop = nextElement.offsetTop + (nextElement.offsetHeight / 2) - (scrollContainer.offsetHeight / 2);
@@ -584,6 +740,12 @@
     }
 
 
+    /**
+     * Find and return HTMLElements by attribute name
+     * @param {HTMLElement[]} elements
+     * @param {string} attribute
+     * @returns {HTMLElement[]}
+     */
     function getElementsByAttributeName(elements, attribute) {
         var result = [];
         for (var i = 0, n = elements.length; i < n; i++) {
@@ -603,12 +765,22 @@
     }
 
 
+    /**
+     * Add class to HTMLElement
+     * @param {HTMLElement} element
+     * @param {string} className
+     */
     function addClass(element, className) {
         removeClass(element, className);
         element.className = element.className.split(' ').concat([className]).join(' ').trim();
     }
 
 
+    /**
+     * Remove class from HTMLElement
+     * @param {HTMLElement} element
+     * @param {string} className
+     */
     function removeClass(element, className) {
         var classes = element.className.split(' ');
 
@@ -622,6 +794,12 @@
     }
 
 
+    /**
+     * Merge objects2 to object2 and return new object
+     * @param {object} obj1
+     * @param {object} obj2
+     * @returns {object}
+     */
     function mergeObjects(obj1, obj2){
         var obj3 = {};
         for (var attrname in obj1) { obj3[attrname] = obj1[attrname]; }
@@ -629,6 +807,11 @@
         return obj3;
     }
 
+    /**
+     * Clone object
+     * @param obj
+     * @returns {object}
+     */
     function clone(obj) {
         if (null == obj || "object" != typeof obj) return obj;
         var copy = obj.constructor();
