@@ -3,6 +3,7 @@
 
     var prefix = 'nv';
     var options = {
+        prefix: prefix,
         FOV: 35,
         attr: prefix,
         attrScope: prefix + '-scope',
@@ -264,7 +265,6 @@
         }
 
         this.setCurrentScope(scope);
-        scope.activate();
         return this;
     };
 
@@ -302,8 +302,15 @@
      * @returns {Nav}
      */
     Nav.prototype.setCurrentScope = function (scope) {
-        this._prevScope = this.getCurrentScope();
+        var currentScope = this.getCurrentScope();
         var prevElement = null;
+
+        if(currentScope.name === scope.name){
+            DEBUG && console.info(scope.name, ': scope is current now');
+            return this;
+        }
+
+        this._prevScope = currentScope;
 
         if(this._prevScope){
             prevElement = this._prevScope.getCurrentElement();
@@ -320,6 +327,7 @@
         this._currentScope = scope;
         addClass(scope.getScopeElement(), options.attrScopeCurrent);
         scope.getScopeElement().setAttribute(options.attrScopeCurrent, 'true');
+        scope.activate();
         return this;
     };
 
