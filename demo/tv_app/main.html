@@ -1,0 +1,26 @@
+<div nv-scope="main-page" nv-scope-current>
+    <div  nv-scope-current class="poster-container" >
+        <div class="poster poster-left" ng-show="movies[currentIndex-1]">
+            <img ng-src="{{movies[currentIndex-1].assets.poster}}?w=600&h=360" width="400" />
+        </div>
+        <div class="poster poster-center"
+             nv-el
+             nv-el-current
+             nv-left="shift('left')"
+             nv-right="shift('right')"
+             nv-up="toTopMenu()"
+             nv-enter="toMovie(movies[currentIndex])"
+             ng-click="toMovie(movies[currentIndex])">
+            <img ng-src="{{movies[currentIndex].assets.poster}}?w=600&h=360" width="400" />
+        </div>
+        <div class="poster poster-right" ng-show="movies[currentIndex+1]">
+            <img ng-src="{{movies[currentIndex+1].assets.poster}}?w=600&h=360" width="400" />
+        </div>
+    </div>
+    <div style="margin-left: 50%">
+        <button nv-el nv-enter="reloadRoute()" ng-click="reloadRoute()"> refresh @ </button>
+        <button nv-el nv-enter="shift('left')" ng-click="shift('left')"> < </button>
+        <button nv-el nv-enter="shift('right')" ng-click="shift('right')"> > </button>
+    </div>
+</div>
+

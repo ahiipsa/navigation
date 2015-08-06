@@ -1,0 +1,51 @@
+<!doctype html>
+<html ng-app="look1_tv_app">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; Charset=UTF-8"/>
+    <title>Look First App</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script type="text/javascript">
+        if (!Function.prototype.bind) {
+            Function.prototype.bind = function(oThis) {
+                if (typeof this !== 'function') {
+                    // closest thing possible to the ECMAScript 5
+                    // internal IsCallable function
+                    throw new TypeError('Function.prototype.bind - what is trying to be bound is not callable');
+                }
+
+                var aArgs   = Array.prototype.slice.call(arguments, 1),
+                        fToBind = this,
+                        fNOP    = function() {},
+                        fBound  = function() {
+                            return fToBind.apply(this instanceof fNOP && oThis
+                                            ? this
+                                            : oThis,
+                                    aArgs.concat(Array.prototype.slice.call(arguments)));
+                        };
+
+                fNOP.prototype = this.prototype;
+                fBound.prototype = new fNOP();
+
+                return fBound;
+            };
+        }
+    </script>
+</head>
+<body>
+    <div ng-controller="TopMenuCtrl" class="top menu" nv-scope="topmenu" nv-down="toPrevScope()">
+        <div>
+            <span nv-el nv-el-current>home</span>
+            <span nv-el>search</span>
+            <span nv-el>profile</span>
+        </div>
+    </div>
+    <div ng-view></div>
+    <script type="text/javascript" src="navigation.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.12/angular.min.js"></script>
+    <script type="text/javascript" src="https://code.angularjs.org/1.3.12/angular-resource.js"></script>
+    <script type="text/javascript" src="https://code.angularjs.org/1.3.13/angular-route.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="uiNavigation.js"></script>
+    <div id="nav-event-info"></div>
+</body>
+</html>

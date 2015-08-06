@@ -1,0 +1,9 @@
+<div nv-scope="movie" nv-back="back()" nv-scope-current="true" style="padding: 20px 30px">
+    <button nv-el nv-enter="back('enter')" ng-click="back('click')">назад(esc|return)</button>
+    <br />
+    <h2>{{movie.name}}</h2> <br />
+    <img ng-src="{{movie.assets.poster}}?w=600&h=360" width="400" />
+    <br />
+    <button nv-el nv-el-current="true">купить</button>
+    <button nv-el>посмотреть потом</button>
+</div>

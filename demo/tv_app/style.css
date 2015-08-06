@@ -1,0 +1,60 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    /*width: 1280px;*/
+    /*height: 720px;*/
+    font-family: verdana
+}
+
+button {
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.button {
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.nv-scope-current {
+    border: 2px solid black;
+}
+
+.nv-scope-current .nv-el-current {
+    background-color: green;
+}
+
+.poster-container {
+    height: 300px;
+}
+
+.poster-center {
+    position: absolute;
+    margin-left: 50%;
+    left: -200px;
+}
+
+.poster-left {
+    position: absolute;
+    left: 0;
+}
+
+.poster-right {
+    position: absolute;
+    right: 0;
+}
+
+div#nav-event-info {
+    width: 200px;
+    border: 1px solid greenyellow;
+    position: fixed;
+    right: 0;
+    top: 0;
+    background-color: black;
+    color: white;
+    padding: 7px 10px;
+    z-index: 99;
+}
