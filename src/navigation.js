@@ -533,22 +533,28 @@
 
     /**
      * Trigger navigation event
-     * @param name
-     * @param target
+     * @param {string} name
+     * @param {HTMLElement} target
      */
     Nav.prototype.trigger = function (name, target) {
-        var eventName = prefix + '-' + name;
-        var navEvent = new Event(eventName, {
-            bubbles: true,
-            cancelable: false,
-            target: target,
-            toElement: target
-        });
+        var eventName = options.prefix + '-' + name;
+        var navEvent = null;
+
+        if(typeof CustomEvent === 'function') {
+            navEvent = new CustomEvent(eventName);
+        } else if(typeof document.createEvent === 'function') {
+            navEvent = document.createEvent('CustomEvent');
+            navEvent.initCustomEvent(eventName, true, true);
+        } else {
+            console.log('Can\t create custom event');
+            throw new Error('Can\t create custom event');
+        }
 
         target.dispatchEvent(navEvent);
 
         // jquery support
         if(typeof $ !== 'undefined'){
+            console.log('if typeof $ not undefined, trigger');
             $(target).trigger(eventName);
         }
     };
