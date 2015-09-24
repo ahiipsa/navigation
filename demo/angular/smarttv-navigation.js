@@ -1,5 +1,5 @@
 (function(window, angular) {
-    var app = angular.module('uiNavigation', ['ng']);;
+    var app = angular.module('smarttvNavigation', ['ng']);
     var keyCodes = navigation.getKeyMapping();
     var events = [];
     for(var keyCode in keyCodes){
@@ -24,6 +24,7 @@
         });
     });
 
+
     NavigationElement.$inject = ['$log', '$timeout'];
     function NavigationElement($log, $timeout){
         return {
@@ -32,6 +33,10 @@
                 // wait set attr
                 $timeout(function () {
                     navigation.addElement(element[0]);
+                });
+
+                scope.on('$destroy', function () {
+                    // TODO: remove element from navigation scope
                 });
             }
         };
@@ -42,9 +47,10 @@
     function NavigationScope($log, $timeout){
         return {
             restrict: 'A',
-            link: function (scope, element) {
+            link: function (scope, element, attrs) {
+                var nvScopeName = attrs.nvScope;
                 scope.$on("$destroy", function () {
-                    navigation.removeScope(element[0])
+                    navigation.removeScope(nvScopeName);
                 });
             }
         };
@@ -53,7 +59,4 @@
 
     app.directive('nvScope', NavigationScope)
         .directive('nvEl', NavigationElement)
-
-
-
 })(window, window.angular);

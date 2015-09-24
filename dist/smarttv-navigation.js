@@ -1,5 +1,5 @@
 (function(window, angular) {
-    var app = angular.module('uiNavigation', ['ng']);
+    var app = angular.module('smarttvNavigation', ['ng']);
     var keyCodes = navigation.getKeyMapping();
     var events = [];
     for(var keyCode in keyCodes){

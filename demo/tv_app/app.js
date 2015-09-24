@@ -121,7 +121,7 @@
     }
 
     angular
-        .module('look1_tv_app', ['ngResource', 'ngRoute', 'uiNavigation'])
+        .module('look1_tv_app', ['ngResource', 'ngRoute', 'smarttvNavigation'])
         .config(['$routeProvider', function($routeProvider) {
             $routeProvider
                 .when('/', {templateUrl: './main.html', controller: 'MainCtrl'})

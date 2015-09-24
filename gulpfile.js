@@ -10,11 +10,17 @@ gulp.task('copy', function () {
     gulp.src('src/navigation.js')
         .pipe(gulp.dest('dist'));
 
+    gulp.src('src/angular/smarttv-navigation.js')
+        .pipe(gulp.dest('dist'));
+
     gulp.src('src/navigation.css')
         .pipe(gulp.dest('dist'));
 
     gulp.src('src/navigation.js')
         .pipe(gulp.dest('demo'));
+
+    gulp.src('src/angular/smarttv-navigation.js')
+        .pipe(gulp.dest('demo/angular'));
 
     gulp.src('src/navigation.css')
         .pipe(gulp.dest('demo'));
