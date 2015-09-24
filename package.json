@@ -1,6 +1,6 @@
 {
   "name": "smarttv-navigation",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Keyboard navigation for Smart TV applications",
   "main": "/dist/navigation.js",
   "devDependencies": {
