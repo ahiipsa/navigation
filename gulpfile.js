@@ -11,7 +11,7 @@ gulp.task('copy', function () {
         .pipe(gulp.dest('dist'));
 
     gulp.src('src/angular/smarttv-navigation.js')
-        .pipe(gulp.dest('dist'));
+        .pipe(gulp.dest('dist/angular'));
 
     gulp.src('src/navigation.css')
         .pipe(gulp.dest('dist'));
