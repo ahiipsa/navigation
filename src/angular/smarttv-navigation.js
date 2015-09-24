@@ -35,7 +35,7 @@
                     navigation.addElement(element[0]);
                 });
 
-                scope.on('$destroy', function () {
+                scope.$on('$destroy', function () {
                     // TODO: remove element from navigation scope
                 });
             }
