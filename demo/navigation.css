@@ -1,0 +1,11 @@
+.nv-scope {
+    background-color: #E0E0E0;
+}
+
+.nv-scope-current {
+    background-color: #DCEDC8;
+}
+
+.nv-scope-current .nv-el-current {
+    background-color: #03A9F4;
+}

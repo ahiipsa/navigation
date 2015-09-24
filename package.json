@@ -1,10 +1,12 @@
 {
-  "name": "navigation",
+  "name": "smarttv-navigation",
   "version": "1.0.7-1",
   "description": "Keyboard navigation for Smart TV applications",
   "main": "index.js",
   "devDependencies": {
     "gulp": "^3.8.11",
+    "gulp-connect": "^2.2.0",
+    "gulp-livereload": "^3.8.0",
     "gulp-rename": "^1.2.0",
     "gulp-uglify": "^1.1.0"
   },

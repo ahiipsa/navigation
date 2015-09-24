@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; Charset=UTF-8"/>
     <title>Demo - Smart TV Navigation</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="/style.css"/>
 </head>
 <body ng-controller="MainCtrl">
     <div class="container">
@@ -116,14 +116,16 @@
     </div>
     <script type="text/javascript">
         var SVG = {
-            createCanvas : function( width, height, container ){
+            createCanvas: function (width, height, x, y) {
                 var canvas = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-                canvas.setAttribute('width', width);
-                canvas.setAttribute('height', height);
-                container.appendChild( canvas );
+                canvas.setAttribute('width', 200);
+                canvas.setAttribute('height', 200);
+                canvas.setAttribute('class', 'fov');
+                canvas.style.top = y;
+                canvas.style.left = x;
                 return canvas;
             },
-            createLine : function (x1, y1, x2, y2, color, w) {
+            createLine: function (x1, y1, x2, y2, color, w) {
                 var aLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
                 aLine.setAttribute('x1', x1);
                 aLine.setAttribute('y1', y1);
@@ -132,51 +134,88 @@
                 aLine.setAttribute('stroke', color);
                 aLine.setAttribute('stroke-width', w);
                 return aLine;
+            },
+            createCircle: function (cx, cy, r, strokeColor, strokeWidth, fillColor) {
+                var circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                circle.setAttribute('cx', cx);
+                circle.setAttribute('cy', cy);
+                circle.setAttribute('r', r || 10);
+                circle.setAttribute('stroke', strokeColor || 'black');
+                circle.setAttribute('stroke-width', strokeWidth || 1);
+                circle.setAttribute('fill', fillColor || 'red');
+                return circle;
             }
         };
 
-        function drawFOV(element, FOV){
+        function drawFOV(element, FOV) {
             removeAllSVG();
 
-            var rayLenght = 150;
+            var rayLenght = 100;
             var a = rayLenght;
-            var B = Math.floor( FOV / 2);
+            var B = Math.floor(FOV / 2);
             var b = a * Math.tan(B * (Math.PI / 180));
 
             var x = element.offsetWidth / 2;
             var y = element.offsetHeight / 2;
 
-            var canvas = SVG.createCanvas(element.offsetHeight, element.offsetWidth, element);
+            var ax = element.getBoundingClientRect().left;
+            var ay = element.getBoundingClientRect().top;
+
+            var canvas = SVG.createCanvas(element.offsetWidth, element.offsetHeight, ax, ay);
+            document.body.appendChild(canvas);
 
             // down
-            canvas.appendChild( SVG.createLine(x, y, x + b, y + rayLenght, 'green', 1) );
-            canvas.appendChild( SVG.createLine(x, y, x + (b * -1),  y + rayLenght, 'green', 1) );
+            var offsetx = x;
+            var offsety = y;
+            canvas.appendChild(SVG.createLine(x, y+offsety, x + b, y + rayLenght + offsety, 'green', 1));
+            canvas.appendChild(SVG.createLine(x, y+offsety, x + (b * -1), y + rayLenght + offsety, 'green', 1));
 
             // top
-            canvas.appendChild( SVG.createLine(x, y, x + b, y + (rayLenght * -1), 'red', 1) );
-            canvas.appendChild( SVG.createLine(x, y, x + (b * -1), y + (rayLenght * -1), 'red', 1) );
+            canvas.appendChild(SVG.createLine(x, y - offsety, x + b, y + (rayLenght * -1) - offsety, 'red', 1));
+            canvas.appendChild(SVG.createLine(x, y - offsety, x + (b * -1), y + (rayLenght * -1) - offsety, 'red', 1));
 
             // left
-            canvas.appendChild( SVG.createLine(x, y, x + (rayLenght * -1), y + b, 'blue', 1) );
-            canvas.appendChild( SVG.createLine(x, y, x + (rayLenght * -1), y + (b * -1), 'blue', 1) );
+            canvas.appendChild(SVG.createLine(x - offsetx, y, x + (rayLenght * -1) - offsetx, y + b, 'blue', 1));
+            canvas.appendChild(SVG.createLine(x - offsetx, y, x + (rayLenght * -1) - offsetx, y + (b * -1), 'blue', 1));
 
             // right
-            canvas.appendChild( SVG.createLine(x, y, x + rayLenght, y + b, 'yellow', 1) );
-            canvas.appendChild( SVG.createLine(x, y, x + rayLenght, y + (b * -1), 'yellow', 1) );
+            canvas.appendChild(SVG.createLine(x + offsetx, y, x + rayLenght + offsetx, y + b, 'yellow', 1));
+            canvas.appendChild(SVG.createLine(x + offsetx, y, x + rayLenght + offsetx, y + (b * -1), 'yellow', 1));
         }
 
-        function removeAllSVG(){
+        function removeAllSVG() {
             var svgElements = document.body.querySelectorAll('svg');
-            for(var i = 0; i < svgElements.length; i++){
+            for (var i = 0; i < svgElements.length; i++) {
                 svgElements[i].remove();
             }
         }
+
+        function showFOVListener() {
+            var element = navigation.getCurrentScope().getCurrentElement();
+            drawFOV(element, navigation.getOptions().FOV);
+
+            var elements = navigation.getCurrentScope().getNavigationElements();
+
+
+            // drow points
+            for(var el in elements){
+                var el = elements[el];
+                var ax = el.getBoundingClientRect().left;
+                var ay = el.getBoundingClientRect().top;
+
+                var canvas = SVG.createCanvas(200, 200, ax, ay);
+                var circle = SVG.createCircle(el.offsetWidth / 2, el.offsetHeight / 2, 5, ax, ay);
+                canvas.appendChild(circle);
+                document.body.appendChild(canvas);
+            }
+        }
     </script>
-    <script type="text/javascript" src="../dist/navigation.js"></script>
+    <script type="text/javascript" src="/navigation.js"></script>
     <script type="text/javascript">
         var scope1scope2 = document.getElementById('scope1-scope2');
 
         scope1scope2.addEventListener('nv-enter', function (event) {
+            console.log('change scope');
                     navigation.changeScope('scope2');
                 });
         scope1scope2.addEventListener('click', function (event) {
@@ -210,11 +249,13 @@
         });
 
 
-
-//        document.body.addEventListener('nv-move', function (event) {
-//            var element = navigation.getCurrentScope().getCurrentElement();
-//            drawFOV(element, navigation.getOptions().FOV);
-//        });
+        function showFOV(flag) {
+            if (flag) {
+                document.body.addEventListener('nv-move', showFOVListener);
+            } else {
+                document.body.removeEventListener('nv-move', showFOVListener);
+            }
+        }
 
     </script>
 </body>

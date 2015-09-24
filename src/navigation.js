@@ -1,10 +1,12 @@
 (function() {
-    if (typeof DEBUG === 'undefined') DEBUG = true; // will be removed
+    if (typeof DEBUG === 'undefined') {
+        var DEBUG = true;
+    }
 
     var prefix = 'nv';
     var options = {
+        FOV: 90,
         prefix: prefix,
-        FOV: 35,
         attr: prefix,
         attrScope: prefix + '-scope',
         attrScopeCurrent: prefix + '-scope-current',
@@ -54,7 +56,7 @@
      * Current navigation scope
      * @type {NavScope}
      */
-    Nav.prototype_currentScope = null;
+    Nav.prototype._currentScope = null;
 
 
     /**
@@ -119,7 +121,7 @@
         9:      '5',
         10:     '6',
         12:     '7',
-        13:     '8',
+        //13:     '8',
         14:     '9',
         17:     '0'
     };
@@ -152,6 +154,7 @@
      * Deinitialize navigation
      */
     Nav.prototype.deinitialize = function () {
+        var self = this;
         this._scopes = {};
         this._currentScope = null;
         this._prevScope = null;
@@ -327,15 +330,15 @@
      * @returns {Nav}
      */
     Nav.prototype.setCurrentScope = function (scope) {
-        var currentScope = this.getCurrentScope();
+        var prevScope = this.getCurrentScope();
         var prevElement = null;
 
-        if(currentScope.name === scope.name){
+        if(prevScope.name === scope.name){
             DEBUG && console.info(scope.name, ': scope is current now');
             return this;
         }
 
-        this._prevScope = currentScope;
+        this._prevScope = prevScope;
 
         if(this._prevScope){
             prevElement = this._prevScope.getCurrentElement();
@@ -345,7 +348,7 @@
             removeClass(prevScopeEl, options.attrScopeCurrent);
 
             if(prevElement){
-                removeClass(this._prevScope.getCurrentElement(), options.attrElementCurrent);
+                removeClass(prevElement, options.attrElementCurrent);
             }
         }
 
@@ -397,6 +400,17 @@
     };
 
 
+    Nav.prototype.isScopeExist = function (scopeName) {
+        var scope = this.getScope(scopeName);
+
+        if(scope){
+            return true;
+        }
+
+        return false;
+    };
+
+
     /**
      * Return current nav element
      * @returns {HTMLElement}
@@ -429,10 +443,10 @@
         // trick listen remove from DOM
         var _remove = element.remove;
         element.remove = function () {
-            console.log('----  remove element');
+            DEBUG && console.log('----  remove element');
             scope.removeElement(element);
             _remove.call(element);
-        }
+        };
 
         if(scope.isCurrentElement(element)){
             DEBUG && console.info(scope.name, ': new element is current');
@@ -452,6 +466,7 @@
                 self.changeScope(scope.name);
             }
 
+            scope.setCurrentElement(element);
         });
 
         return self;
@@ -506,7 +521,7 @@
             currentScope = self.getCurrentScope();
 
         if(!currentScope){
-            console.error('current scope not found');
+            DEBUG && console.error('current scope not found');
             return;
         }
 
@@ -517,25 +532,10 @@
             return;
         }
 
-        var eventName = this.getEventName(event),
-            nextElement = null;
+        var eventName = this.getEventName(event);
 
         if (eventName && ['left', 'right', 'up', 'down'].indexOf(eventName) > -1) {
-            nextElement = currentScope.getNextElement(eventName);
-
-            if (nextElement) {
-                currentScope.setCurrentElement(nextElement);
-                this.trigger('move', currentElement);
-            }
-
-            if(self.mouseEnableTimeout){
-                clearTimeout(self.mouseEnableTimeout);
-            }
-
-            self.isMouseEnable = false;
-            self.mouseEnableTimeout = setTimeout(function () {
-                self.isMouseEnable = true;
-            }, 1000);
+            self.move(eventName);
         }
 
         // if declared event / dispatch declared event
@@ -556,6 +556,28 @@
     };
 
 
+    Nav.prototype.move = function (direction) {
+        var self = this;
+        var currentScope = self.getCurrentScope();
+        var currentElement = currentScope.getCurrentElement();
+        var nextElement = currentScope.getNextElement(direction);
+
+        if (nextElement) {
+            currentScope.setCurrentElement(nextElement);
+            this.trigger('move', currentElement);
+        }
+
+        if(self.mouseEnableTimeout){
+            clearTimeout(self.mouseEnableTimeout);
+        }
+
+        self.isMouseEnable = false;
+        self.mouseEnableTimeout = setTimeout(function () {
+            self.isMouseEnable = true;
+        }, 1000);
+    };
+
+
     /**
      * Trigger navigation event
      * @param {string} name
@@ -566,22 +588,16 @@
         var navEvent = null;
 
         if(typeof CustomEvent === 'function') {
-            navEvent = new CustomEvent(eventName);
+            navEvent = new CustomEvent(eventName, {bubbles: "true"});
         } else if(typeof document.createEvent === 'function') {
             navEvent = document.createEvent('CustomEvent');
             navEvent.initCustomEvent(eventName, true, true);
         } else {
-            console.log('Can\t create custom event');
+            DEBUG && console.log('Can\t create custom event');
             throw new Error('Can\t create custom event');
         }
 
         target.dispatchEvent(navEvent);
-
-        // jquery support
-        if(typeof $ !== 'undefined'){
-            console.log('if typeof $ not undefined, trigger');
-            $(target).trigger(eventName);
-        }
     };
 
 
@@ -602,15 +618,13 @@
      * @returns {NavScope}
      */
     NavScope.prototype.activate = function () {
-        console.log(this.name, ': activated, elements', this.navigationElements.length);
+        DEBUG && console.log(this.name, ': activated, elements', this.navigationElements.length);
 
         this.currentElement = this.getCurrentElement();
 
         if(!this.currentElement){
             DEBUG && console.info(this.name, ': not found current element');
-        }
-
-        if(this.currentElement){
+        } else {
             addClass(this.currentElement, options.attrElementCurrent);
         }
 
@@ -724,14 +738,19 @@
         this.currentElement = element;
 
         if(prevElement){
-            prevElement.removeAttribute(options.attrElementCurrent);
-            removeClass(prevElement, options.attrElementCurrent);
+            this.cleanCurrentElement(prevElement);
         }
 
         this.currentElement = element;
         addClass(this.currentElement, options.attrElementCurrent);
 
         this.currentElement.setAttribute(options.attrElementCurrent, 'true');
+    };
+
+
+    NavScope.prototype.cleanCurrentElement = function (element) {
+        element.removeAttribute(options.attrElementCurrent);
+        removeClass(element, options.attrElementCurrent);
     };
 
 
@@ -748,15 +767,29 @@
             return;
         }
 
-        var distance = null,
+        var windowSize = getWindowSize(),
+            FOV = options.FOV,
+            halfFOV = FOV / 2,
+            distance = null,
             index,
             navElements = this.navigationElements,
-            currentRect = current.getBoundingClientRect(),
-        // todo function
-            cx = currentRect.left + (currentRect.width / 2),
-            cy = currentRect.top + (currentRect.height / 2);
+            currentElementRect = current.getBoundingClientRect(),
+            currentElementX = currentElementRect.left + (currentElementRect.width / 2),
+            currentElementY = currentElementRect.top + (currentElementRect.height / 2),
+            currentElementCenter = new Point(currentElementX, currentElementY);
 
-        var FOV = options.FOV;
+        // offset in the direction of motion
+        if ('up' == direction) {
+            currentElementCenter.y = currentElementRect.top;
+        } else if('down' == direction){
+            currentElementCenter.y = currentElementRect.top + currentElementRect.height;
+        } else if('left' == direction){
+            currentElementCenter.x = currentElementRect.left;
+        } else if('right' == direction){
+            currentElementCenter.x = currentElementRect.left + currentElementRect.width;
+        } else {
+            DEBUG && console.error('Not declared direction: ' + direction);
+        }
 
         for (var i = 0; i < navElements.length; i++) {
             var el = navElements[i],
@@ -764,18 +797,16 @@
                 isCurrent = navElements.indexOf(current) == i,
                 inDOM = document.body.contains(el);
 
-            // if current
             if (isHidden || isCurrent || !inDOM) {
                 continue;
             }
 
-            var elRect = el.getBoundingClientRect(),
-                ex = elRect.left + (elRect.width / 2),
-                ey = elRect.top + (elRect.height / 2),
-                xdiff = cx - ex,
-                ydiff = cy - ey,
-                dis = Math.round(Math.pow((xdiff * xdiff + ydiff * ydiff), 0.5)),
-                angle = Math.round(Math.atan2(ydiff, xdiff) * (180 / Math.PI));
+            var elementRect = el.getBoundingClientRect(),
+                elementCenterX = elementRect.left + (elementRect.width / 2),
+                elementCenterY = elementRect.top + (elementRect.height / 2),
+                elementCenter = new Point(elementCenterX, elementCenterY),
+                elementDistance = getDistance(currentElementCenter, elementCenter),
+                angle = getAngle(currentElementCenter, elementCenter);
 
             // angle normalize [0,360]
             if (angle < 0) angle += 360;
@@ -786,26 +817,61 @@
             var inFOV = false;
 
             // left
-            if (direction == 'left' && (angle > (360 - FOV) && angle <= 360 || angle >= 0 && angle < (0 + FOV) )) {
+            if (direction == 'left' && (angle > (360 - halfFOV) && angle <= 360 || angle >= 0 && angle < (0 + halfFOV) )) {
                 inFOV = true;
-            } else if (direction == 'down' && (angle > (270 - FOV) && angle < (270 + FOV))) {
+            } else if (direction == 'down' && (angle > (270 - halfFOV) && angle < (270 + halfFOV))) {
                 inFOV = true;
-            } else if (direction == 'right' && (angle > (180 - FOV) && angle < (180 + FOV))) {
+            } else if (direction == 'right' && (angle > (180 - halfFOV) && angle < (180 + halfFOV))) {
                 inFOV = true;
-            } else if (direction == 'up' && (angle > (90 - FOV)  && angle < (90 + FOV))) {
+            } else if (direction == 'up' && (angle > (90 - halfFOV)  && angle < (90 + halfFOV))) {
                 inFOV = true;
             }
 
-            if(!inFOV){
+            // Intersection
+            var x1 = elementRect.left,
+                x2 = elementRect.left + elementRect.width,
+                y1 = elementRect.top,
+                y2 = elementRect.top + elementRect.height;
+
+            var intersections = [], endPoint, line;
+
+            if ('up' == direction) {
+                // bottom line
+                line = {start: new Point(x1, y2), end: new Point(x2, y2)};
+                endPoint = new Point(currentElementCenter.x, 0);
+            } else if ('down' == direction){
+                // top line
+                line = {start: new Point(x1, y1), end: new Point(x2, y1)};
+                endPoint = new Point(currentElementCenter.x, windowSize.height);
+            } else if ('left' == direction) {
+                // right line
+                line = {start: new Point(x2, y1), end: new Point(x2, y2)};
+                endPoint = new Point(0, currentElementCenter.y);
+            } else if ('right' == direction) {
+                // left line
+                line = {start: new Point(x1, y1), end: new Point(x1, y2)};
+                endPoint = new Point(windowSize.width, currentElementCenter.y);
+            }
+
+            var intersection = getIntersection(endPoint, currentElementCenter, line.start, line.end);
+
+            if(intersection){
+                elementDistance = getDistance(currentElementCenter, intersection);
+                intersections.push(intersection);
+            }
+
+            if(!inFOV && !intersections.length){
                 continue;
             }
 
-            if (distance === null || distance > dis) {
-                distance = dis;
+            // save to best way
+            if (distance === null || distance > elementDistance) {
+                distance = elementDistance;
                 index = i;
             }
         }
 
+        // if not found
         if (typeof index === 'undefined') {
             return false;
         }
@@ -911,6 +977,81 @@
             if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
         }
         return copy;
+    }
+
+    function Point(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    function Point2f(start, type, end) {
+        if(type == '-') {
+            return {x: start.x - end.x, y: start.y - end.y}
+        }
+        else if(type == '*') {
+            return {x: start.x * end.x, y: start.y * end.y}
+        }
+        else if(type == '+') {
+            return {x: start.x + end.x, y: start.y + end.y}
+        }
+        else if(type == '/') {
+            return {x: start.x / end.x, y: start.y / end.y}
+        }
+    }
+
+
+    function getIntersection(start1, end1, start2, end2) {
+        var dir1 = Point2f(end1, '-', start1),
+            dir2 = Point2f(end2, '-', start2);
+
+        // считаем уравнения прямых проходящих через отрезки
+        var a1 = -dir1.y;
+        var b1 = +dir1.x;
+        var d1 = -(a1*start1.x + b1*start1.y);
+
+        var a2 = -dir2.y;
+        var b2 = +dir2.x;
+        var d2 = -(a2*start2.x + b2*start2.y);
+
+        // подставляем концы отрезков, для выяснения в каких полуплоскотях они
+        var seg1_line2_start = a2*start1.x + b2*start1.y + d2;
+        var seg1_line2_end = a2*end1.x + b2*end1.y + d2;
+
+        var seg2_line1_start = a1*start2.x + b1*start2.y + d1;
+        var seg2_line1_end = a1*end2.x + b1*end2.y + d1;
+
+        // если концы одного отрезка имеют один знак, значит он в одной полуплоскости и пересечения нет
+        if (seg1_line2_start * seg1_line2_end >= 0 || seg2_line1_start * seg2_line1_end >= 0)
+            return false;
+
+        var u = seg1_line2_start / (seg1_line2_start - seg1_line2_end);
+
+        var pin_out = Point2f({x: u, y: u}, '*', dir1);
+
+        return Point2f(start1, '+', pin_out);
+    }
+
+    function getAngle(pointA, pointB){
+        var diff = Point2f(pointA, '-', pointB);
+        var angle = Math.round(Math.atan2(diff.y, diff.x) * (180 / Math.PI));
+        return angle;
+    }
+
+    function getDistance(pointA, pointB){
+        var diff = Point2f(pointA, '-', pointB);
+        var dis = Math.round( Math.pow((diff.x * diff.x + diff.y * diff.y), 0.5));
+        return dis;
+    }
+
+    function getWindowSize() {
+        var w = window,
+            d = document,
+            e = d.documentElement,
+            g = d.getElementsByTagName('body')[0],
+            width = w.innerWidth || e.clientWidth || g.clientWidth,
+            height = w.innerHeight || e.clientHeight || g.clientHeight;
+
+        return {width: width, height: height};
     }
 
     var nav = new Nav();

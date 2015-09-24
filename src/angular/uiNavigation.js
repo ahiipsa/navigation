@@ -24,6 +24,7 @@
         });
     });
 
+
     NavigationElement.$inject = ['$log', '$timeout'];
     function NavigationElement($log, $timeout){
         return {
@@ -33,25 +34,29 @@
                 $timeout(function () {
                     navigation.addElement(element[0]);
                 });
+
+                scope.on('$destroy', function () {
+                    // TODO: remove element from navigation scope
+                });
             }
         };
-    }
+    };
+
 
     NavigationScope.$inject = ['$log', '$timeout'];
     function NavigationScope($log, $timeout){
         return {
             restrict: 'A',
-            link: function (scope, element) {
+            link: function (scope, element, attrs) {
+                var nvScopeName = attrs.nvScope;
                 scope.$on("$destroy", function () {
-                    navigation.removeScope(element[0])
+                    navigation.removeScope(nvScopeName);
                 });
             }
         };
-    }
+    };
+
 
     app.directive('nvScope', NavigationScope)
         .directive('nvEl', NavigationElement)
-
-
-
 })(window, window.angular);

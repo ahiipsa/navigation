@@ -122,3 +122,10 @@ div#nav-event-info {
     padding: 7px 10px;
     z-index: 99;
 }
+
+.fov {
+    position: absolute;
+    display: block;
+    z-index: 100;
+    overflow: visible;
+}
