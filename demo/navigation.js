@@ -1,6 +1,6 @@
 (function() {
     if (typeof DEBUG === 'undefined') {
-        var DEBUG = true;
+        var DEBUG = false;
     }
 
     var prefix = 'nv';
@@ -27,6 +27,15 @@
 
         Nav.instance = this;
         return Nav.instance;
+    };
+
+
+    /**
+     * Switch debug mode
+     * @param flag
+     */
+    Nav.prototype.debug = function (flag) {
+        return DEBUG = flag;
     };
 
 
