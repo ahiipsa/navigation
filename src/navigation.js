@@ -512,6 +512,21 @@
 
 
     /**
+     * Remove element from scopes
+     * @param element
+     * @returns {object}
+     */
+    Nav.prototype.removeElement = function (element) {
+        var scopes = this.getScopes();
+
+        for (var i = 0; i < scopes.length; i++) {
+            scopes[i].removeElement(element);
+        }
+
+        return this;
+    };
+
+    /**
      * Handle event interface
      * @param {Event} event
      */
