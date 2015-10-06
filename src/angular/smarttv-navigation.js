@@ -19,6 +19,12 @@
                             scope.$eval(attrs[dirName], {'event': event});
                         });
                     });
+
+                    if(eventName == 'enter'){
+                        element.bind('click', function (event) {
+                            scope.$eval(attrs[dirName], {'event': event});
+                        });
+                    }
                 }
             }
         });

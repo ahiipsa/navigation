@@ -66,6 +66,6 @@ gulp.task('watch', function () {
 });
 
 gulp.task('http_server', function() {
-    connect.server({root: 'demo'});
+    connect.server({root: 'demo', port: 8082});
     return;
 });
