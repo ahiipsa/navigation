@@ -408,7 +408,7 @@
      * @returns {NavScope}
      */
     Nav.prototype.getScope = function (scopeName) {
-        var scope = this.getScope(scopeName);
+        var scope = this.getScopes()[scopeName];
 
         if(!scope){
             return false;
