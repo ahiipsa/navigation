@@ -43,6 +43,7 @@
 
                 scope.$on('$destroy', function () {
                     // TODO: remove element from navigation scope
+                    navigation.removeElement(element[0]);
                 });
             }
         };

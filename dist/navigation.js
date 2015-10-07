@@ -253,7 +253,7 @@
 
     /**
      * Remove scope from navigation
-     * @param {string} scope
+     * @param {string|Object} scope
      */
     Nav.prototype.removeScope = function (scope) {
         var scopeName = '';
@@ -268,9 +268,18 @@
             scopeName = scope.getAttribute(options.attrScope)
         }
 
+        scope = this.getScope(scopeName);
+
+        if(this.isCurrentScope(scope)){
+            DEBUG && console.log('remove current scope');
+            this._currentScope = null;
+        }
+
         // todo if object
 
-        this.getScopes()[scopeName] = null;
+        DEBUG && console.log('remove scope', scopeName);
+        this.getScopes()[scopeName] = undefined;
+        delete this.getScopes()[scopeName];
     };
 
 
@@ -295,7 +304,7 @@
      * @returns {Nav}
      */
     Nav.prototype.changeScope = function (scopeName) {
-        var scope = this.getScopes()[scopeName];
+        var scope = this.getScope(scopeName);
 
         if(!scope){
             throw new Error('Scope not found');
@@ -399,7 +408,7 @@
      * @returns {NavScope}
      */
     Nav.prototype.getScope = function (scopeName) {
-        var scope = this.getScopes()[scopeName];
+        var scope = this.getScope(scopeName);
 
         if(!scope){
             return false;
