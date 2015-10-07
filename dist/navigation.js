@@ -282,6 +282,21 @@
         delete this.getScopes()[scopeName];
     };
 
+    /**
+     * Remove element from navigation
+     * @param {HTMLElement} element
+     * @returns {Nav}
+     */
+    Nav.prototype.removeElement = function (element) {
+        var scopes = this.getScopes();
+
+        for (var i = 0; i < scopes.length; i++) {
+            scopes[i].removeElement(element);
+        }
+
+        return this;
+    };
+
 
     /**
      * @todo change attr to {string} scopeName
