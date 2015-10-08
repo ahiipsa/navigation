@@ -2,9 +2,11 @@
     var app = angular.module('smarttvNavigation', ['ng']);
     var keyCodes = navigation.getKeyMapping();
     var events = [];
-    for(var keyCode in keyCodes){
-        if(events.indexOf(keyCodes[keyCode]) === -1){
-            events.push(keyCodes[keyCode]);
+
+    for (var i = 0; i < keyCodes.length; i++) {
+        var eventName = keyCodes[i][1];
+        if(events.indexOf(eventName) == -1){
+            events.push(eventName);
         }
     }
 

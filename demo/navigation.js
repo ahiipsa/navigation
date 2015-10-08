@@ -77,63 +77,73 @@
 
 
     /**
-     * Key mapping key/value table
-     * @type {object}
+     * Key mapping [keyCode, eventName, value]
+     * @type {Array}
      * @private
      */
-    Nav.prototype._keyMapping = {
+    Nav.prototype._keyMapping = [
         // web and lg smart tv
-        37:     'left',
-        38:     'up',
-        39:     'right',
-        40:     'down',
-        13:     'enter',
-        27:     'back',
-        403:    'red',
-        404:    'green',
-        405:    'yellow',
-        406:    'blue',
-        412:    'rw',
-        413:    'stop',
-        415:    'play',
-        417:    'ff',
-        33:     'ch_up',
-        34:     'ch_down',
-        457:    'info',
-        461:    'back', // return
-        1015:   'mic',
+        [37,     'left'],
+        [38,     'up'],
+        [39,     'right'],
+        [40,     'down'],
+        [13,     'enter'],
+        [27,     'back'],
+        [403,    'red'],
+        [404,    'green'],
+        [405,    'yellow'],
+        [406,    'blue'],
+        [412,    'rw'],
+        [413,    'stop'],
+        [415,    'play'],
+        [417,    'ff'],
+        [33,     'ch_up'],
+        [34,     'ch_down'],
+        [457,    'info'],
+        [48,     'numpad', 0],
+        [49,     'numpad', 1],
+        [50,     'numpad', 2],
+        [51,     'numpad', 3],
+        [52,     'numpad', 4],
+        [53,     'numpad', 5],
+        [54,     'numpad', 6],
+        [55,     'numpad', 7],
+        [56,     'numpad', 8],
+        [57,     'numpad', 9],
+        [461,    'back'], // return
+        [1015,   'mic'],
         // samsung smart tv
-        4:      'left',
-        5:      'right',
-        29460:  'up',
-        29461:  'down',
-        29443:  'enter',
-        108:    'red',
-        20:     'green',
-        21:     'yellow',
-        22:     'blue',
-        69:     'rw',
-        71:     'play',
-        74:     'pause',
-        72:     'ff',
-        7:      'volume_up',
-        11:     'volume_down',
-        68:     'ch_up',
-        65:     'ch_down',
-        70:     'stop',
-        27:     'mute',
-        31:     'info',
-        101:    '1',
-        98:     '2',
-        6:      '3',
-        8:      '4',
-        9:      '5',
-        10:     '6',
-        12:     '7',
-        //13:     '8',
-        14:     '9',
-        17:     '0'
-    };
+        [4,      'left'],
+        [5,      'right'],
+        [29460,  'up'],
+        [29461,  'down'],
+        [29443,  'enter'],
+        [108,    'red'],
+        [20,     'green'],
+        [21,     'yellow'],
+        [22,     'blue'],
+        [69,     'rw'],
+        [71,     'play'],
+        [74,     'pause'],
+        [72,     'ff'],
+        [7,      'volume_up'],
+        [11,     'volume_down'],
+        [68,     'ch_up'],
+        [65,     'ch_down'],
+        [70,     'stop'],
+        [27,     'mute'],
+        [31,     'info'],
+        [17,     'numpad', 0],
+        [101,    'numpad', 1],
+        [98,     'numpad', 2],
+        [6,      'numpad', 3],
+        [8,      'numpad', 4],
+        [9,      'numpad', 5],
+        [10,     'numpad', 6],
+        [12,     'numpad', 7],
+        [13,     'numpad', 8],
+        [14,     'numpad', 9]
+    ];
 
 
     /**
@@ -201,7 +211,7 @@
 
     /**
      * Override current key mapping
-     * @param keyMapping
+     * @param {Array} keyMapping
      * @returns {Nav}
      */
     Nav.prototype.setKeyMapping = function (keyMapping) {
@@ -216,7 +226,7 @@
      * @returns {Nav}
      */
     Nav.prototype.addKeyMapping = function (keyMapping) {
-        this._keyMapping = mergeObjects(this._keyMapping, keyMapping);
+        this._keyMapping = this._keyMapping.concat(keyMapping);
         return this;
     };
 
@@ -408,8 +418,29 @@
      * @returns {string}
      */
     Nav.prototype.getEventName = function(event) {
-        if (typeof this._keyMapping[event.keyCode] !== 'undefined') {
-            return this._keyMapping[event.keyCode];
+        var keyMapping = this.getKeyMapping();
+        for (var i = 0; i < keyMapping.length; i++) {
+            var item = keyMapping[i];
+            if(item[0] == event.keyCode){
+                return item[1];
+            }
+        }
+
+        return false;
+    };
+
+
+    /**
+     * @param {Event} event
+     * @returns {*}
+     */
+    Nav.prototype.getEventValue = function(event) {
+        var keyMapping = this.getKeyMapping();
+        for (var i = 0; i < keyMapping.length; i++) {
+            var item = keyMapping[i];
+            if(item[0] == event.keyCode){
+                return item[2] || item[1];
+            }
         }
 
         return false;
@@ -566,6 +597,7 @@
         }
 
         var eventName = this.getEventName(event);
+        var eventValue = this.getEventValue(event);
 
         if (eventName && ['left', 'right', 'up', 'down'].indexOf(eventName) > -1) {
             self.move(eventName);
@@ -573,7 +605,7 @@
 
         // if declared event / dispatch declared event
         if(eventName){
-            this.trigger(eventName, currentElement);
+            this.trigger(eventName, currentElement, eventValue);
         }
 
         var log = document.getElementById('nav-event-info');
@@ -616,15 +648,15 @@
      * @param {string} name
      * @param {HTMLElement} target
      */
-    Nav.prototype.trigger = function (name, target) {
+    Nav.prototype.trigger = function (name, target, value) {
         var eventName = options.prefix + '-' + name;
         var navEvent = null;
 
         if(typeof CustomEvent === 'function') {
-            navEvent = new CustomEvent(eventName, {bubbles: "true"});
+            navEvent = new CustomEvent(eventName, {bubbles: "true", detail: {value: value}});
         } else if(typeof document.createEvent === 'function') {
             navEvent = document.createEvent('CustomEvent');
-            navEvent.initCustomEvent(eventName, true, true);
+            navEvent.initCustomEvent(eventName, true, true, {value: value});
         } else {
             DEBUG && console.log('Can\t create custom event');
             throw new Error('Can\t create custom event');
