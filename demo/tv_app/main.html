@@ -19,8 +19,8 @@
     </div>
     <div style="margin-left: 50%">
         <button nv-el nv-enter="reloadRoute()" ng-click="reloadRoute()"> refresh @ </button>
-        <button nv-el nv-enter="shift('left')" ng-click="shift('left')"> < </button>
-        <button nv-el nv-enter="shift('right')" ng-click="shift('right')"> > </button>
+        <button nv-el nv-enter="shift('left', $keyValue)" ng-click="shift('left')"> < </button>
+        <button nv-el nv-enter="shift('right', $keyValue)" ng-click="shift('right')"> > </button>
     </div>
 </div>
 

@@ -12,19 +12,19 @@
 
     angular.forEach(events, function (eventName) {
         var dirName = 'nv' + (eventName.substring(0, 1).toUpperCase() + eventName.substr(1));
-        app.directive(dirName, function () {
+        app.directive(dirName, function ($parse) {
             return {
                 restrict: 'A',
                 link: function(scope, element, attrs, controller){
                     element.bind( 'nv-' + eventName, function (event) {
                         scope.$apply(function(){
-                            scope.$eval(attrs[dirName], {'event': event});
+                            scope.$eval(attrs[dirName], {'$event': event, '$keyValue': event.detail.value});
                         });
                     });
 
                     if(eventName == 'enter'){
                         element.bind('click', function (event) {
-                            scope.$eval(attrs[dirName], {'event': event});
+                            scope.$eval(attrs[dirName], {'$event': event, '$keyValue': event.detail.value});
                         });
                     }
                 }

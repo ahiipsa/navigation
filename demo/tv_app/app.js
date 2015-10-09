@@ -38,9 +38,12 @@
         $scope.toTopMenu = function () {
             console.log('TO TOP MENU');
             navigation.changeScope('topmenu');
-        }
+        };
 
         $scope.shift = function (direction) {
+
+            console.log('$scope.event', $scope.event);
+            console.log('arguments', arguments);
             var index = null;
             if (direction == 'left') {
                 index = $scope.currentIndex-1;
