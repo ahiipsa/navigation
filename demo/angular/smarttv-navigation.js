@@ -24,7 +24,9 @@
 
                     if(eventName == 'enter'){
                         element.bind('click', function (event) {
-                            scope.$eval(attrs[dirName], {'$event': event, '$keyValue': event.detail.value});
+                            scope.$apply(function(){
+                                scope.$eval(attrs[dirName], {'$event': event, '$keyValue': event.detail.value});
+                            });
                         });
                     }
                 }
