@@ -666,6 +666,23 @@
     };
 
 
+    /**
+     * Scroll to current element
+     */
+    Nav.prototype.scrollToCurrentElement = function () {
+        var scope = this.getCurrentScope();
+        var element = scope.getCurrentElement();
+        scroll(scope.element, element);
+    };
+
+
+
+    /**
+     * Navigation scope
+     * @param element
+     * @returns {NavScope}
+     * @constructor
+     */
     var NavScope = function(element){
         var self = this;
         self.name = element.getAttribute(options.attrScope);
@@ -763,7 +780,6 @@
                 currentElement = navElements[i];
                 // @todo break loop
             }
-
         }
 
         return currentElement;
@@ -942,7 +958,7 @@
         }
 
         var nextElement = navElements[index];
-        scroll(this.element, current, nextElement);
+        scroll(this.element, nextElement);
 
         return nextElement;
     };
@@ -951,12 +967,11 @@
     /**
      * Function for scroll
      * @param {HTMLElement} scrollContainer
-     * @param {HTMLElement} currentElement
-     * @param {HTMLElement} nextElement
+     * @param {HTMLElement} element
      */
-    function scroll(scrollContainer, currentElement, nextElement){
-        var scrollLeft = nextElement.offsetLeft + (nextElement.offsetWidth / 2) - (scrollContainer.offsetWidth / 2);
-        var scrollTop = nextElement.offsetTop + (nextElement.offsetHeight / 2) - (scrollContainer.offsetHeight / 2);
+    function scroll(scrollContainer, element){
+        var scrollLeft = element.offsetLeft + (element.offsetWidth / 2) - (scrollContainer.offsetWidth / 2);
+        var scrollTop = element.offsetTop + (element.offsetHeight / 2) - (scrollContainer.offsetHeight / 2);
 
         scrollContainer.scrollLeft = scrollLeft;
         scrollContainer.scrollTop = scrollTop;
