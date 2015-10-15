@@ -439,7 +439,11 @@
         for (var i = 0; i < keyMapping.length; i++) {
             var item = keyMapping[i];
             if(item[0] == event.keyCode){
-                return item[2] || item[1];
+                if(typeof item[2] === 'undefined'){
+                    return item[1];
+                }
+
+                return item[2];
             }
         }
 
@@ -614,6 +618,7 @@
             log.innerHTML = '<b>Last event:</b>' +
             '<br /> navEvent: ' + options.prefix + '-' + eventName +
             '<br /> keyValue: ' + String.fromCharCode(event.keyCode || event.charCode) +
+            '<br /> eventValue: ' + eventValue +
             '<br /> keyCode: ' + event.keyCode +
             '<br /> eventType: ' + event.type +
             '<br /> navScope: ' + currentScope.name;
