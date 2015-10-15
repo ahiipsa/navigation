@@ -36,7 +36,7 @@ min:
 
 ## Install with npm
 
-todo...
+`npm i smarttv-navigation`
  
 ## Attributes
 
