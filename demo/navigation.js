@@ -908,21 +908,21 @@
             var elementRect = el.getBoundingClientRect(),
                 elementCenterX = elementRect.left + (elementRect.width / 2),
                 elementCenterY = elementRect.top + (elementRect.height / 2),
-                elementCenter = new Point(elementCenterX, elementCenterY),
-                angle = getAngle(currentElementCenter, elementCenter);
+                elementCenter = new Point(elementCenterX, elementCenterY);
 
             // find near side
             if ('up' == direction) {
-                elementCenter.y = elementRect.top;
-            } else if('down' == direction){
                 elementCenter.y = elementRect.top + elementRect.height;
+            } else if('down' == direction){
+                elementCenter.y = elementRect.top;
             } else if('left' == direction){
-                elementCenter.x = elementRect.left;
-            } else if('right' == direction){
                 elementCenter.x = elementRect.left + elementRect.width;
+            } else if('right' == direction){
+                elementCenter.x = elementRect.left;
             }
 
             var elementDistance = getDistance(currentElementCenter, elementCenter);
+            var angle = getAngle(currentElementCenter, elementCenter);
 
             // angle normalize [0,360]
             if (angle < 0) angle += 360;
