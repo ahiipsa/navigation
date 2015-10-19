@@ -867,6 +867,12 @@
             return false;
         }
 
+        if(['up', 'down', 'left', 'right'].indexOf(direction) === -1){
+            var error = 'Not declared direction: ' + direction;
+            DEBUG && console.error(error);
+            throw Error(error);
+        }
+
         var windowSize = getWindowSize(),
             FOV = this.FOV || options.FOV,
             halfFOV = FOV / 2,
@@ -887,8 +893,6 @@
             currentElementCenter.x = currentElementRect.left;
         } else if('right' == direction){
             currentElementCenter.x = currentElementRect.left + currentElementRect.width;
-        } else {
-            DEBUG && console.error('Not declared direction: ' + direction);
         }
 
         for (var i = 0; i < navElements.length; i++) {
@@ -905,8 +909,20 @@
                 elementCenterX = elementRect.left + (elementRect.width / 2),
                 elementCenterY = elementRect.top + (elementRect.height / 2),
                 elementCenter = new Point(elementCenterX, elementCenterY),
-                elementDistance = getDistance(currentElementCenter, elementCenter),
                 angle = getAngle(currentElementCenter, elementCenter);
+
+            // find near side
+            if ('up' == direction) {
+                elementCenter.y = elementRect.top;
+            } else if('down' == direction){
+                elementCenter.y = elementRect.top + elementRect.height;
+            } else if('left' == direction){
+                elementCenter.x = elementRect.left;
+            } else if('right' == direction){
+                elementCenter.x = elementRect.left + elementRect.width;
+            }
+
+            var elementDistance = getDistance(currentElementCenter, elementCenter);
 
             // angle normalize [0,360]
             if (angle < 0) angle += 360;
