@@ -9,6 +9,7 @@
         prefix: prefix,
         attr: prefix,
         attrScope: prefix + '-scope',
+        attrScopeFOV: prefix + '-scope-fov',
         attrScopeCurrent: prefix + '-scope-current',
         attrElement: prefix + '-el',
         attrElementCurrent: prefix + '-el-current'
@@ -197,6 +198,18 @@
     Nav.prototype.getOptions = function () {
         var opt = clone(options);
         return opt;
+    };
+
+
+    /**
+     * Set option by name
+     * @param key option name
+     * @param value option value
+     * @returns {Nav}
+     */
+    Nav.prototype.setOption = function (key, value) {
+        options[key] = value;
+        return this;
     };
 
 
@@ -696,6 +709,7 @@
         self.navigationElements = [];
         self.currentElement = null;
         self.activate();
+        self.FOV = parseInt( element.getAttribute(options.attrScopeFOV), 10);
         return self;
     };
 
@@ -843,18 +857,18 @@
     /**
      * Get next element by direction
      * @param {string} direction
-     * @returns {HTMLElement}
+     * @returns {HTMLElement|boolean}
      */
     NavScope.prototype.getNextElement = function(direction) {
         var current = this.getCurrentElement();
 
         if(!current){
             DEBUG && console.info('Current element not found');
-            return;
+            return false;
         }
 
         var windowSize = getWindowSize(),
-            FOV = options.FOV,
+            FOV = this.FOV || options.FOV,
             halfFOV = FOV / 2,
             distance = null,
             index,

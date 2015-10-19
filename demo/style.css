@@ -56,6 +56,17 @@ body {
     margin: 0;
 }
 
+.example.random {
+    position: relative;
+    width: 100%;
+    height: 500px;
+}
+
+.example .block {
+    display: inline-block;
+    position: absolute;
+}
+
 .block {
     width: 100px;
     height: 100px;

@@ -70,9 +70,24 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-12" >
+                <h2>Rand</h2>
+                <div nv-scope="random" nv-scope-fov="180" class="example random">
+                    <div nv-el class="block yellow" style="left: 0; top: 0px">to scope 1</div>
+                    <div class="block yellow" style="left: 0px;    top: 120px" nv-el></div>
+                    <div class="block yellow" style="left: 120px;  top: 0px" nv-el></div>
+                    <div class="block yellow" style="left: 120px;  top: 120px" nv-el></div>
+
+                    <div class="block yellow" style="left: 240px;  top: 120px" nv-el></div>
+                    <div class="block yellow" style="left: 360px;  top: 120px" nv-el></div>
+                    <div class="block yellow" style="left: 480px;  top: 120px" nv-el></div>
+                </div>
+            </div>
+        </div>
         <div class="row example-2">
             <div class="col-md-6">
-                <h2>Scope 3 scroll</h2>
+                <h2>Scroll</h2>
                 <div id="scroll" nv-scope="scope3">
                     <div class="wide-container">
                         <div nv-el nv-el-current class="block yellow"></div>
@@ -112,7 +127,6 @@
                 </div>
             </div>
         </div>
-
     </div>
     <script type="text/javascript">
         var SVG = {

@@ -143,3 +143,11 @@ document.body.addEventListener('nv-left', function (event) {
 });
 
 ```
+
+### Debug mode
+
+``js
+
+navigation.debug(true);
+
+``
