@@ -60,6 +60,7 @@
             restrict: 'A',
             link: function (scope, element, attrs) {
                 var nvScopeName = attrs.nvScope;
+                navigation.addScope(element[0]);
                 scope.$on("$destroy", function () {
                     navigation.removeScope(nvScopeName);
                 });
