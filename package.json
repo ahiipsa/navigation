@@ -25,5 +25,8 @@
   "bugs": {
     "url": "https://github.com/ahiipsa/navigation/issues"
   },
-  "homepage": "https://github.com/ahiipsa/navigation"
+  "homepage": "https://github.com/ahiipsa/navigation",
+  "dependencies": {
+    "gulp-open": "^1.0.0"
+  }
 }

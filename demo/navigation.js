@@ -12,6 +12,7 @@
         attrScopeFOV: prefix + '-scope-fov',
         attrScopeCurrent: prefix + '-scope-current',
         attrElement: prefix + '-el',
+        attrElementFOV: prefix + '-el-fov',
         attrElementCurrent: prefix + '-el-current'
     };
 
@@ -874,7 +875,8 @@
         }
 
         var windowSize = getWindowSize(),
-            FOV = this.FOV || options.FOV,
+            currentElementFOV = parseInt(current.getAttribute( options.attrElementFOV ), 10),
+            FOV = currentElementFOV || this.FOV || options.FOV,
             halfFOV = FOV / 2,
             distance = null,
             index,
