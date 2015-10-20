@@ -1,10 +1,17 @@
-var gulp = require('gulp'),
+var util = require('util'),
+    gulp = require('gulp'),
     uglify = require('gulp-uglify'),
     rename = require('gulp-rename'),
     connect = require('gulp-connect'),
-    livereload = require('gulp-livereload');
+    livereload = require('gulp-livereload'),
+    open = require('gulp-open');
 
-gulp.task('default', ['http_server', 'copy', 'compress', 'watch']);
+
+var options = {
+    port: 8082
+};
+
+gulp.task('default', ['http_server', 'copy', 'compress', 'watch', 'open_browser']);
 
 gulp.task('copy', function () {
     gulp.src('src/navigation.js')
@@ -65,7 +72,14 @@ gulp.task('watch', function () {
     return;
 });
 
+gulp.task('open_browser', function () {
+    gulp.src('').pipe(open({
+        uri: util.format('http://localhost:%d', options.port)
+    }));
+    return;
+});
+
 gulp.task('http_server', function() {
-    connect.server({root: 'demo', port: 8082});
+    connect.server({root: 'demo', port: options.port});
     return;
 });
