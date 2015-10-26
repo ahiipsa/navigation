@@ -35,8 +35,8 @@
     });
 
 
-    NavigationElement.$inject = ['$log', '$timeout'];
-    function NavigationElement($log, $timeout){
+    NavigationElement.$inject = ['$timeout'];
+    function NavigationElement($timeout){
         return {
             restrict: 'A',
             link: function(scope, element) {
@@ -46,7 +46,6 @@
                 });
 
                 scope.$on('$destroy', function () {
-                    // TODO: remove element from navigation scope
                     navigation.removeElement(element[0]);
                 });
             }
@@ -54,8 +53,8 @@
     };
 
 
-    NavigationScope.$inject = ['$log', '$timeout'];
-    function NavigationScope($log, $timeout){
+    NavigationScope.$inject = [];
+    function NavigationScope(){
         return {
             restrict: 'A',
             link: function (scope, element, attrs) {
@@ -70,5 +69,5 @@
 
 
     app.directive('nvScope', NavigationScope)
-        .directive('nvEl', NavigationElement)
+        .directive('nvEl', NavigationElement);
 })(window, window.angular);
