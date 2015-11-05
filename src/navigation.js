@@ -52,7 +52,7 @@
      * Mouse enable timeout
      * @type {boolean}
      */
-    Nav.prototype.mouseEnableTimeout = true;
+    Nav.prototype.mouseEnableTimeout;
 
 
     /**
@@ -617,6 +617,7 @@
 
         var eventName = this.getEventName(event);
         var eventValue = this.getEventValue(event);
+        DEBUG && console.log('keycode: ', + event.keyCode, 'eventName: ', eventName, 'eventValue: ', eventValue);
 
         if (eventName && ['left', 'right', 'up', 'down'].indexOf(eventName) > -1) {
             self.move(eventName);
