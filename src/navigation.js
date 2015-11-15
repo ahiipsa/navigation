@@ -251,7 +251,7 @@
      * @param {HTMLElement} element
      * @returns {Nav}
      */
-    Nav.prototype.addScope = function (element) {
+    Nav.prototype._addScope = function (element) {
         var self = this,
             navScope = new NavScope(element);
 
@@ -260,7 +260,7 @@
         var attrCurrentScope = element.getAttribute(options.attrScopeCurrent);
         if(attrCurrentScope === '' || attrCurrentScope === 'true'){
             DEBUG && console.info(navScope.name, ': is current scope');
-            self.setCurrentScope(navScope);
+            self._setCurrentScope(navScope);
         }
 
         // trick listen remove from DOM
@@ -307,6 +307,7 @@
         delete this.getScopes()[scopeName];
     };
 
+
     /**
      * Remove element from navigation
      * @param {HTMLElement} element
@@ -315,8 +316,8 @@
     Nav.prototype.removeElement = function (element) {
         var scopes = this.getScopes();
 
-        for (var i = 0; i < scopes.length; i++) {
-            scopes[i].removeElement(element);
+        for (var scopeName in scopes) {
+            scopes[scopeName].removeElement(element)
         }
 
         return this;
@@ -330,7 +331,7 @@
      * @returns {boolean}
      */
     Nav.prototype.isCurrentScope = function (scope) {
-        if(scope === this.getCurrentScope()){
+        if(scope.name === this.getCurrentScope().name){
             return true;
         }
 
@@ -350,7 +351,7 @@
             throw new Error('Scope not found');
         }
 
-        this.setCurrentScope(scope);
+        this._setCurrentScope(scope);
         return this;
     };
 
@@ -387,7 +388,7 @@
      * @param {NavScope} scope
      * @returns {Nav}
      */
-    Nav.prototype.setCurrentScope = function (scope) {
+    Nav.prototype._setCurrentScope = function (scope) {
         var prevScope = this.getCurrentScope();
         var prevElement = null;
 
@@ -509,9 +510,9 @@
      * @param {HTMLElement} element
      * @returns {Nav}
      */
-    Nav.prototype.addElementToScope = function (scopeName, element){
+    Nav.prototype._addElementToScope = function (scopeName, element){
         var self = this,
-            scope = this.getScope(scopeName)
+            scope = this.getScope(scopeName);
 
         if(!scope){
             throw Error('Scope "' + scopeName + '" not found');
@@ -577,11 +578,49 @@
         var scope = this.getScope(scopeName);
 
         if(!scope){
-            this.addScope(_el);
+            this._addScope(_el);
         }
 
-        this.addElementToScope(scopeName, element);
+        this._addElementToScope(scopeName, element);
         addClass(element, options.attrElement);
+    };
+
+
+    /**
+     * Check is element in navigation
+     * @param element
+     * @returns {boolean}
+     */
+    Nav.prototype.hasElement = function (element) {
+        var scopes = this.getScopes();
+
+        for (var scopeName in scopes) {
+            var scope = scopes[scopeName]
+            if(scope.hasElement(element)){
+                return true;
+            }
+        }
+
+        return false;
+    };
+
+
+    /**
+     * Find scope by element
+     * @param {HTMLElement} element
+     * @returns {NavScope|boolean}
+     */
+    Nav.prototype.getScopeByElement = function (element) {
+        var scopes = this.getScopes();
+
+        for (var scopeName in arguments) {
+            var scope = scopes[scopeName];
+            if(scope.hasElement(element)){
+                return scope;
+            }
+        }
+
+        return false;
     };
 
 
@@ -670,20 +709,7 @@
      * @param {HTMLElement} target
      */
     Nav.prototype.trigger = function (name, target, value) {
-        var eventName = options.prefix + '-' + name;
-        var navEvent = null;
-
-        if(typeof CustomEvent === 'function') {
-            navEvent = new CustomEvent(eventName, {bubbles: "true", detail: {value: value}});
-        } else if(typeof document.createEvent === 'function') {
-            navEvent = document.createEvent('CustomEvent');
-            navEvent.initCustomEvent(eventName, true, true, {value: value});
-        } else {
-            DEBUG && console.log('Can\t create custom event');
-            throw new Error('Can\t create custom event');
-        }
-
-        target.dispatchEvent(navEvent);
+        triggerEvent(name, target, value);
     };
 
 
@@ -758,17 +784,38 @@
      * @returns {NavScope}
      */
     NavScope.prototype.removeElement = function (element) {
-        var index = this.navigationElements.indexOf(element);
+        var elements = this.getNavigationElements();
+
+        var index = elements.indexOf(element);
 
         if(this.isCurrentElement(element)){
             DEBUG && console.info('remove current element');
         }
+
+        element.removeAttribute(options.attrElement);
+        removeClass(element, options.attrElement);
 
         if(index > -1){
             this.navigationElements.splice(index, 1);
         }
 
         return this;
+    };
+
+
+    /**
+     * Check is element in scope
+     * @param {HTMLElement} element
+     * @returns {boolean}
+     */
+    NavScope.prototype.hasElement = function (element) {
+        var elements = this.getNavigationElements();
+
+        if(elements.indexOf(element) !== -1){
+            return true;
+        }
+
+        return false;
     };
 
 
@@ -882,7 +929,7 @@
             halfFOV = FOV / 2,
             distance = null,
             index,
-            navElements = this.navigationElements,
+            navElements = this.getNavigationElements(),
             currentElementRect = current.getBoundingClientRect(),
             currentElementX = currentElementRect.left + (currentElementRect.width / 2),
             currentElementY = currentElementRect.top + (currentElementRect.height / 2),
@@ -1159,6 +1206,23 @@
             height = w.innerHeight || e.clientHeight || g.clientHeight;
 
         return {width: width, height: height};
+    }
+
+    function triggerEvent (name, target, value) {
+        var eventName = options.prefix + '-' + name;
+        var navEvent = null;
+
+        if(typeof CustomEvent === 'function') {
+            navEvent = new CustomEvent(eventName, {bubbles: "true", detail: {value: value}});
+        } else if(typeof document.createEvent === 'function') {
+            navEvent = document.createEvent('CustomEvent');
+            navEvent.initCustomEvent(eventName, true, true, {value: value});
+        } else {
+            DEBUG && console.log('Can\t create custom event');
+            throw new Error('Can\t create custom event');
+        }
+
+        target.dispatchEvent(navEvent);
     }
 
     var nav = new Nav();
