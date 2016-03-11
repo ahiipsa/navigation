@@ -45,7 +45,7 @@
                     <div class="block-container">
                         <div nv-el class="block yellow"></div>
                         <div nv-el class="block yellow"></div>
-                        <div nv-el class="block yellow"></div>
+                        <div nv-el id="focus" class="block yellow">on focus</div>
                     </div>
                     <div class="block-container">
                         <div class="block orange inactive">inactive</div>
@@ -262,6 +262,10 @@
             navigation.changeScope('scope1');
         });
 
+        var elFocus = document.getElementById('focus');
+        elFocus.addEventListener('nv-focus', function (event) {
+            console.log('focus');
+        });
 
         function showFOV(flag) {
             if (flag) {

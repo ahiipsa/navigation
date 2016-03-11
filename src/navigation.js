@@ -690,6 +690,7 @@
         if (nextElement) {
             currentScope.setCurrentElement(nextElement);
             this.trigger('move', currentElement);
+            this.trigger('focus', nextElement);
         }
 
         if(self.mouseEnableTimeout){
