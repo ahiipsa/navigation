@@ -10,26 +10,6 @@ Keyboard navigation for Smart TV applications
 
 [navigation.tar.gz](https://github.com/ahiipsa/navigation/tarball/master)
 
-
-
-## CDN
-
-dev:
-
-```html
-
-<script type="text/javascript" src="https://rawgit.com/ahiipsa/navigation/1.0.6/dist/navigation.js"></script>
-
-```
-
-min:
-
-```html
-
-<script type="text/javascript" src="https://cdn.rawgit.com/ahiipsa/navigation/1.0.6/dist/navigation.min.js"></script>
-
-```
-
 ## Install with Bower
 
 `bower install navigation`
@@ -85,9 +65,11 @@ document.body.addEventListener('nv-left', function (event) {
 
 ### Default event list
 
-nv-left, nv-up, nv-right, nv-down, nv-enter, nv-back, nv-red, nv-green, nv-yellow, nv-blue, nv-rw, nv-stop, nv-play, nv-ff, nv-ch_up, nv-ch_down, nv-info, nv-mic
+nv-left, nv-up, nv-right, nv-down, nv-enter, nv-move, nv-focus
 
-or public api:
+nv-back, nv-red, nv-green, nv-yellow, nv-blue, nv-rw, nv-stop, nv-play, nv-ff, nv-ch_up, nv-ch_down, nv-info, nv-mic
+
+Or use public api:
 
 ```js
 
@@ -146,8 +128,8 @@ document.body.addEventListener('nv-left', function (event) {
 
 ### Debug mode
 
-``js
+```js
 
 navigation.debug(true);
 
-``
+```
