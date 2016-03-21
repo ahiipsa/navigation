@@ -4,16 +4,10 @@
     <meta charset="utf-8">
     <title>Tests</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/2.1.0/mocha.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/2.1.0/mocha.js"></script>
-    <!-- настраиваем Mocha: предстоит BDD-тестирование -->
-    <script>
-        mocha.setup('bdd');
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/2.0.0/chai.js"></script>
     <link rel="stylesheet" href="../src/navigation.css">
 </head>
 <body>
-    <script src="test.js"></script>
+
     <div id="scopeContainer" class="container">
         <div id="scopeFirst" nv-scope="first" nv-scope-current="true">
             <span nv-el nv-el-current="true">one</span>
@@ -30,6 +24,13 @@
     </div>
     <div id="mocha"></div>
     <script src="../src/navigation.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/2.1.0/mocha.js"></script>
+    <!-- настраиваем Mocha: предстоит BDD-тестирование -->
+    <script>
+        mocha.setup('bdd');
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/2.0.0/chai.js"></script>
+    <script src="index.js"></script>
     <script>
         mocha.run();
     </script>
