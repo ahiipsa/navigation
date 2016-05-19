@@ -30,7 +30,7 @@
                         });
                     }
                 }
-            }
+            };
         });
     });
 
@@ -50,7 +50,7 @@
                 });
             }
         };
-    };
+    }
 
 
     NavigationScope.$inject = [];
@@ -59,13 +59,13 @@
             restrict: 'A',
             link: function (scope, element, attrs) {
                 var nvScopeName = attrs.nvScope;
-                navigation.addScope(element[0]);
+                navigation._addScope(element[0]);
                 scope.$on("$destroy", function () {
                     navigation.removeScope(nvScopeName);
                 });
             }
         };
-    };
+    }
 
 
     app.directive('nvScope', NavigationScope)
