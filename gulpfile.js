@@ -12,6 +12,7 @@ var options = {
 };
 
 gulp.task('default', ['http_server', 'copy', 'compress', 'watch', 'open_browser']);
+gulp.task('build', ['compress', 'copy']);
 
 gulp.task('copy', function () {
     gulp.src('src/navigation.js')
