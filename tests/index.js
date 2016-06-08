@@ -104,14 +104,14 @@ describe('Navigation.scopes', function () {
         assert.isTrue(navigation.isScopeExist('second'));
     });
 
-    it('_addScope(element)', function () {
+    it('addScope(element)', function () {
         var scopeEl = document.createElement('div');
         scopeEl.setAttribute('nv-scope', 'third');
         scopeEl.setAttribute('id', 'scopeThird');
 
         var scopeContainer = document.getElementById('scopeContainer');
         scopeContainer.appendChild(scopeEl);
-        navigation._addScope(scopeEl);
+        navigation.addScope(scopeEl);
         assert.isObject(navigation.getScope('third'));
     });
 

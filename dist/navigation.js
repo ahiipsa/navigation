@@ -251,7 +251,7 @@
      * @param {HTMLElement} element
      * @returns {Nav}
      */
-    Nav.prototype._addScope = function (element) {
+    Nav.prototype.addScope = function (element) {
         var self = this,
             navScope = new NavScope(element);
 
@@ -578,7 +578,7 @@
         var scope = this.getScope(scopeName);
 
         if(!scope){
-            this._addScope(_el);
+            this.addScope(_el);
         }
 
         this._addElementToScope(scopeName, element);
