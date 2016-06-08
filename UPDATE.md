@@ -1,0 +1,6 @@
+- run: npm run build
+- update version in package.json, bower.js
+- create git version tag
+- push to upstream
+- npm publish
+- 
