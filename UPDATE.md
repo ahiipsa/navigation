@@ -1,6 +1,7 @@
+- run test (run tests/index.html)
 - run: npm run build
-- update version in package.json, bower.js
-- create git version tag
-- push to upstream
-- npm publish
-- 
+- commit changes
+- update version in package.json, bower.json
+- commit changes & create git version tag `git tag -a v1.2.x`
+- push to upstream `git push | gut push --tags`
+- publish to npm publish (bower update from github)

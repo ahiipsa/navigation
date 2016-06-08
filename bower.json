@@ -6,7 +6,7 @@
     "Sergey Karasev <ahiipsa@gmail.com>"
   ],
   "description": "Keyboard navigation for Smart TV applications",
-  "main": "dist/navigation.min.js",
+  "main": "dist/navigation.js",
   "ignore": [
     "demo",
     "src",
