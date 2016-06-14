@@ -1227,7 +1227,7 @@
     }
 
     var nav = new Nav();
-    window.navigation = function () {
-        return nav.initialize();
-    }();
+    document.addEventListener( "DOMContentLoaded", function(){
+        window.navigation = nav.initialize();
+    }, false );
 })();
